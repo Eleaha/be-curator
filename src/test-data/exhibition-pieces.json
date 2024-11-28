@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"exhibition_id": 1,
+		"institution_id": 2,
+		"piece_id": "O828149",
+		"piece_order": 0,
+		"note": ""
+	},
+	{
+		"id": 2,
+		"exhibition_id": 1,
+		"institution_id": 2,
+		"piece_id": "O828146",
+		"piece_order": 1,
+		"note": "can use the given description"
+	},
+	{
+		"id": 3,
+		"exhibition_id": 1,
+		"institution_id": 1,
+		"piece_id": "co24109",
+		"piece_order": 2,
+		"note": "qwertyuasdfg"
+	}
+]

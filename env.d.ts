@@ -3,7 +3,6 @@ declare global {
 		interface ProcessEnv {
 			PDGADATABASE: string;
 			PASSWORD: string;
-			PORT: number;
 		}
 	}
 }
