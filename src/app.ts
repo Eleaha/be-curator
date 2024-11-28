@@ -1,12 +1,14 @@
 import dotenv from "dotenv";
-import express, { Application } from "express"
+import express, { Application } from "express";
 import { apiRouter } from "./routes/api-router";
+import { usersRouter } from "./routes/users-router";
 
+dotenv.config();
 
-dotenv.config()
+export const app = express();
 
-export const app: Application = express();
-
-app.use(express.json())
+app.use(express.json());
 
 app.use("/api", apiRouter);
+
+app.use("/api/users", usersRouter);

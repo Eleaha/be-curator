@@ -39,13 +39,15 @@ export const seed = async (testData: TestData) => {
 		testData.exhibitionPieceData.map(Object.values)
 	);
 
-	const insertQueryData: string[] = [
+	const queries: string[] = [
 		users,
 		institutions,
 		collectionPieces,
 		exhibitions,
 		exhibitionPieces,
 	];
-
-	insertQueryData.forEach((query: string) => db.query(query));
+	
+	for (const query of queries){
+		await db.query(query)
+	}
 };
