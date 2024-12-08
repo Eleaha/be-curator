@@ -13,14 +13,14 @@ const ExhibitionPieceSchema = z.object({
 	institution_id: z.number().int(),
 	piece_id: z.string(),
 	piece_order: z.number().int(),
-	note: z.string().max(2000),
+	note: z.string().max(2000).optional(),
 });
 
 const ExhibitionSchema = z.object({
 	exhibition_id: z.number().int(),
 	user_id: z.number().int(),
 	title: z.string().min(1),
-	description: z.string().max(1000),
+	description: z.string().max(1000).optional(),
 	bg_colour: z.string().regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/),
 });
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { fetchUsers } from "../models/user-models";
-import { User } from "../schemas";
+import { User } from "../schemas-interfaces/db-schemas";
 
 export const getUsers = async (
 	req: Request,
@@ -8,6 +8,5 @@ export const getUsers = async (
 	next: NextFunction
 ) => {
 	const users: User[] = await fetchUsers();
-    console.log(users)
 	res.status(200).send({ users });
 };
