@@ -3,7 +3,7 @@ import format from "pg-format";
 import { dropTables, createTables } from "./manage-tables";
 import { db } from "./db-connection";
 
-import { TestData } from "../interfaces";
+import { TestData } from "../test-data/test-data-interfaces";
 
 export const seed = async (testData: TestData) => {
 	await dropTables();
@@ -46,8 +46,8 @@ export const seed = async (testData: TestData) => {
 		exhibitions,
 		exhibitionPieces,
 	];
-	
-	for (const query of queries){
-		await db.query(query)
+
+	for (const query of queries) {
+		await db.query(query);
 	}
 };

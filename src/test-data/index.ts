@@ -4,7 +4,7 @@ import exhibitionData from "./exhibitions.json";
 import instituteData from "./institutions.json";
 import userData from "./users.json";
 
-import { TestData } from "../interfaces";
+import { TestData } from "./test-data-interfaces";
 
 export const testData: TestData = {
 	collectionPieceData,
