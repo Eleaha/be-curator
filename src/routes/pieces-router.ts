@@ -3,4 +3,4 @@ import { getPieces } from "../controllers/pieces-controllers";
 
 export const piecesRouter: Router = express.Router();
 
-piecesRouter.get("/", getPieces)
+piecesRouter.get("/:search", getPieces)

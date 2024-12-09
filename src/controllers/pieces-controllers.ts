@@ -9,16 +9,23 @@ export const getPieces = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { search } = req.query;
+	const { search } = req.params;
 
-	const institutions: string[] = Object.keys(standardisedInteractions);
+	try {
+		const institutions: string[] = Object.keys(standardisedInteractions);
 
-	const pieces: Piece[] = [];
+		const pieces: Piece[] = [];
 
-	for (const institution of institutions) {
-		const institutionPieces = await fetchPieces(search as string, institution);
-		pieces.push(...institutionPieces);
+		for (const institution of institutions) {
+			const institutionPieces = await fetchPieces(search as string, institution);
+			pieces.push(...institutionPieces);
+		}
+
+		pieces.length
+			? res.status(200).send({ pieces })
+			: await Promise.reject({ status: 404, msg: "Not found" });
+
+	} catch (err) {
+		return next(err);
 	}
-
-	res.status(200).send({ pieces });
 };
