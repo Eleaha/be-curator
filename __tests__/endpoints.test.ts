@@ -35,20 +35,29 @@ describe("/api/users", () => {
 	});
 });
 
-//returns a shuffled array -> doesn't show all of one institution then another
-//error handling for if a search query doesn't return anything
 describe("/api/pieces", () => {
-	describe("GET /api/pieces", () => {
+	describe("GET /api/pieces/:search", () => {
 		test("GET 200 /api/pieces - responds wth an array of pieces that defaults to 20 if more than 20 results", async () => {
-			const { body } = await request(app)
-				.get("/api/pieces?search=flowers")
-				.expect(200);
+			const { body } = await request(app).get("/api/pieces/flowers").expect(200);
 			const { pieces } = body;
 			expect(pieces).toHaveLength(20);
 			pieces.forEach((piece: Piece) => {
 				const isValidData = PieceSchema.safeParse(piece);
-				expect(isValidData.success).toBe(true)
-			})
+				expect(isValidData.success).toBe(true);
+			});
+		});
+		test("GET 200 /api/pieces - accounts for search queries with more than one word", async () => {
+			const { body } = await request(app).get("/api/pieces/blown+glass").expect(200);
+			const { pieces } = body;
+			console.log(pieces)
+			pieces.forEach((piece: Piece) => {
+				const isValidData = PieceSchema.safeParse(piece);
+				expect(isValidData.success).toBe(true);
+			});
+		});
+		test("GET 404 - /api/pieces - throws a 404 when no results come up in search", async () => {
+			const { body } = await request(app).get("/api/pieces/asdfghjkl").expect(404);
+			expect(body.msg).toBe("Not found");
 		});
 	});
 });

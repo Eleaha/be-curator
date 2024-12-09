@@ -14,7 +14,7 @@ export const mapApiPiecesData = (id: InteractionKey, data: any[]) => {
 	return data[pieces_data.data_key as keyof typeof data].map((rawPiece: any) => {
 		const maker: string = pieces_data.maker_key
 			? rawPiece[pieces_data.maker_key][pieces_data.maker]
-			: pieces_data.maker;
+			: rawPiece[pieces_data.maker];
 
 		const date: string =
 			id === "2"
