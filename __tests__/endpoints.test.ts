@@ -46,7 +46,7 @@ describe("/api/pieces", () => {
 				expect(isValidData.success).toBe(true);
 			});
 		});
-		test("GET 200 /api/pieces - accounts for search queries with more than one word", async () => {
+		test("GET 200 /api/pieces/:search - accounts for search queries with more than one word", async () => {
 			const { body } = await request(app).get("/api/pieces/blown+glass").expect(200);
 			const { pieces } = body;
 			console.log(pieces)
@@ -55,7 +55,7 @@ describe("/api/pieces", () => {
 				expect(isValidData.success).toBe(true);
 			});
 		});
-		test("GET 404 - /api/pieces - throws a 404 when no results come up in search", async () => {
+		test("GET 404 - /api/pieces/:search - throws a 404 when no results come up in search", async () => {
 			const { body } = await request(app).get("/api/pieces/asdfghjkl").expect(404);
 			expect(body.msg).toBe("Not found");
 		});
