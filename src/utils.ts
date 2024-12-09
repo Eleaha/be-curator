@@ -1,15 +1,20 @@
 import standardisedInteractions from "./apis-standardised.json";
+import { Piece } from "./schemas-interfaces/data-schemas";
 import {
 	InteractionKey,
 	StandardInteractions,
 } from "./schemas-interfaces/interfaces";
 
-export const mapApiPiecesData = (id: InteractionKey, data: any[]) => {
+export const mapApiPiecesData = (
+	institutionId: InteractionKey,
+	data: any[]
+) => {
 	const interactions: StandardInteractions = standardisedInteractions;
 
-	const { pieces_data } = interactions[id].data_map;
+	const { pieces_data } = interactions[institutionId].data_map;
 
-	const vAndAImgApiQuery = id === "1" ? "full/500,/0/default.jpg" : "";
+	const vAndAImgApiQuery =
+		institutionId === "1" ? "full/500,/0/default.jpg" : "";
 
 	return data[pieces_data.data_key as keyof typeof data].map((rawPiece: any) => {
 		const maker: string = pieces_data.maker_key
@@ -17,18 +22,65 @@ export const mapApiPiecesData = (id: InteractionKey, data: any[]) => {
 			: rawPiece[pieces_data.maker];
 
 		const date: string =
-			id === "2"
+			institutionId === "2"
 				? rawPiece.longTitle.match(/\d+$/)[0]
 				: rawPiece[pieces_data.date];
 
 		return {
-			institution_id: id,
+			institution_id: institutionId,
 			piece_id: rawPiece[pieces_data.piece_id],
 			title: rawPiece[pieces_data.title] || "Untitled",
-			maker: maker,
+			maker: maker || "Unknown",
 			img_url:
 				rawPiece[pieces_data.img_key][pieces_data.img_url] + vAndAImgApiQuery,
 			date: date,
 		};
 	});
+};
+
+export const mapApiPieceData = (
+	institutionId: InteractionKey,
+	rawPiece: any
+) => {
+	if (institutionId === "1") {
+		const { meta, record } = rawPiece;
+		
+		const rawMakers: string[] = [
+			...(record.artistMakerPerson || ""),
+			...(record.artistsMakerOrganisations || ""),
+			...(record.artistMakerPeople || ""),
+		];
+
+		const makers: string = rawMakers
+			.map((rawMaker: any) => rawMaker.name.text)
+			.toString();
+
+		const piece: Piece = {
+			institution_id: institutionId,
+			piece_id: record.systemNumber,
+			title: record.titles[0].title || "Unknown",
+			material: record.materialsAndTechniques || "Unknown",
+			maker: makers || "Unknown",
+			img_url: meta.images._iiif_image + "full/800,/0/default.jpg",
+			date: record.productionDates[0].date.text || "Unknown",
+			description: record.physicalDescription,
+		};
+		return piece;
+	}
+
+	if (institutionId === "2") {
+		const { artObject } = rawPiece;
+
+		const piece: Piece = {
+			institution_id: institutionId,
+			piece_id: artObject.id,
+			title: artObject.title || "Unknown",
+			material: artObject.physicalMedium || "Unknown",
+			maker: artObject.principalMaker || "Unknown",
+			img_url: artObject.webImage.url,
+			date: artObject.dating.presentingDate || "Unknown",
+			description: artObject.plaqueDescriptionEnglish,
+		};
+		return piece;
+	}
 };

@@ -12,7 +12,7 @@ const PieceSchema = z.object({
 	institution_id: z.string(),
 	piece_id: z.string(),
 	title: z.string(),
-    type: z.string().optional(),
+    material: z.string().optional(),
 	maker: z.string(),
 	img_url: z.string(),
 	date: z.string(),

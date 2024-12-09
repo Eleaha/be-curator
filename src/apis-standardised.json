@@ -25,6 +25,17 @@
 				"img_key": "_images",
 				"img_url": "_iiif_image_base_url",
 				"date": "_primaryDate"
+			},
+			"piece_data": {
+				"data_key": "record",
+				"piece_id": "systemNumber",
+				"title": "titles[0].title",
+				"material": "materialsAndTechniques",
+				"maker_key": "artistMaker[0].name.text",
+				"maker": "artistMakerPerson, record.artistsMakerOrganisations, record.artistMakerPeople",
+				"img_url": "(from root) images._iiif_image + full/800,/0/default.jpg",
+				"date": "record.productionDates[0].date.text",
+				"description": "physicalDescription"
 			}
 		}
 	},
@@ -51,9 +62,19 @@
 				"piece_id": "objectNumber",
 				"title": "title",
 				"maker": "principalOrFirstMaker",
-				"img_key":"webImage",
+				"img_key": "webImage",
 				"img_url": "url",
 				"date": ""
+			},
+			"piece_data": {
+				"data_key": "artObject",
+				"piece_id": "id",
+				"title": "title",
+				"material": "physicalMedium",
+				"maker": "principalMaker",
+				"img_url": "webImage.url",
+				"date": "dating.presentingDate",
+				"description": "plaqueDescriptionEnglish"
 			}
 		}
 	}
