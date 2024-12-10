@@ -1,12 +1,16 @@
+import request from "supertest";
+
 import { db } from "../src/db/db-connection";
 import { seed } from "../src/db/seed";
 import { testData } from "../src/test-data";
 import endpoints from "../src/endpoints.json";
-
-import request from "supertest";
 import { app } from "../src/app";
-import { User, UserSchema } from "../src/schemas-interfaces/db-schemas";
-import { z } from "zod";
+import {
+	Exhibition,
+	ExhibitionSchema,
+	User,
+	UserSchema,
+} from "../src/schemas-interfaces/db-schemas";
 import { PieceSchema, Piece } from "../src/schemas-interfaces/data-schemas";
 
 afterAll(() => db.end());
@@ -86,14 +90,25 @@ describe("/api/piece", () => {
 			expect(body.msg).toBe("Bad Request");
 		});
 		test("GET 404 /api/piece/:institution_id/:piece_id - piece not found for institution 1", async () => {
-			const { body } = await request(app)
-				.get("/api/piece/1/garbage")
-				.expect(404);
+			const { body } = await request(app).get("/api/piece/1/garbage").expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
 		test("GET 404 /api/piece/:institution_id/:piece_id - piece not found for institution 2", async () => {
 			const { body } = await request(app).get("/api/piece/2/garbage").expect(404);
 			expect(body.msg).toBe("Not Found");
+		});
+	});
+});
+
+describe("/api/exhibitions", () => {
+	describe("GET /api/exhibitions", () => {
+		test("GET 200 /api/exhibitions - responds with an array of exhibitions", async () => {
+			const { body } = await request(app).get("/api/exhibitions").expect(200);
+			const { exhibitions } = body;
+			exhibitions.forEach((exhibition: Exhibition) => {
+				const isValidExhibition = ExhibitionSchema.safeParse(exhibition);
+				expect(isValidExhibition.success).toBe(true);
+			});
 		});
 	});
 });
