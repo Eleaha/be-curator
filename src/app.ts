@@ -5,7 +5,7 @@ import { usersRouter } from "./routes/users-router";
 import { piecesRouter } from "./routes/pieces-router";
 import { handleErrors } from "./error-handling";
 import { pieceRouter } from "./routes/piece-router";
-import { exhibitionsRouter } from "./routes/exhibitions";
+import { exhibitionsRouter } from "./routes/exhibitions-router";
 
 dotenv.config();
 
