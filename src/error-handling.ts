@@ -7,6 +7,12 @@ export const handleErrors = (
 	next: NextFunction
 ) => {
 
+	const badRequestCodes: string[] = ["22P02"]
+
+	if(badRequestCodes.includes(err.code)){
+		res.status(400).send({ msg: "Bad Request" });
+	}
+
 	if (err.status && err.msg) {
 		res.status(err.status).send({ msg: err.msg });
 	}

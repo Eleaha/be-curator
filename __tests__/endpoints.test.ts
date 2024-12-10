@@ -105,10 +105,37 @@ describe("/api/exhibitions", () => {
 		test("GET 200 /api/exhibitions - responds with an array of exhibitions", async () => {
 			const { body } = await request(app).get("/api/exhibitions").expect(200);
 			const { exhibitions } = body;
+			expect(exhibitions).toHaveLength(3);
 			exhibitions.forEach((exhibition: Exhibition) => {
 				const isValidExhibition = ExhibitionSchema.safeParse(exhibition);
 				expect(isValidExhibition.success).toBe(true);
 			});
+		});
+	});
+
+	describe("GET /api/exhibitions/:user_id", () => {
+		test("GET 200 /api/exhibitions/user/:user_id - responds with an array of exhibitions", async () => {
+			const { body } = await request(app).get("/api/exhibitions/user/1").expect(200);
+			const { exhibitions } = body;
+			expect(exhibitions).toHaveLength(2);
+			exhibitions.forEach((exhibition: Exhibition) => {
+				const isValidExhibition = ExhibitionSchema.safeParse(exhibition);
+				expect(isValidExhibition.success).toBe(true);
+			});
+		});
+		test("GET 404 /api/exhibitions/user/:user_id - valid id but non-existent user", async () => {
+			const { body } = await request(app).get("/api/exhibitions/user/6").expect(404);
+			expect(body.msg).toBe("Not Found");
+		});
+		test("GET 404 /api/exhibitions/user/:user_id - existing id, but no associated exhibitions", async () => {
+			const { body } = await request(app).get("/api/exhibitions/user/3").expect(404);
+			expect(body.msg).toBe("No Exhibitions Found");
+		});
+		test("GET 400 /api/exhibitions/user/:user_id - invalid id", async () => {
+			const { body } = await request(app)
+				.get("/api/exhibitions/user/garbage")
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
 		});
 	});
 });

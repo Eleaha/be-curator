@@ -11,6 +11,13 @@
 		"user_id": 1,
 		"title": "Exhibition two",
 		"description": "my second exhibition",
-		"bg_colour": "#c8b0db"
+		"bg_colour": "#000000"
+	},
+	{
+		"exhibition_id": 3,
+		"user_id": 2,
+		"title": "My Exhibition",
+		"description": "exhibition",
+		"bg_colour": "#ffffff"
 	}
 ]
