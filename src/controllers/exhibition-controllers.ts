@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import {
+	fetchExhibitionById,
+	fetchExhibitionPiecesByExhibitionId,
 	fetchExhibitions,
 	fetchExhibitionsByUser,
-} from "../models/exhibition-models";
-import { Exhibition, User } from "../schemas-interfaces/db-schemas";
+} from "../models/exhibitions-models";
+import { Exhibition, ExhibitionPiece, User } from "../schemas-interfaces/db-schemas";
 import { fetchUserById } from "../models/user-models";
 
 export const getExhibitions = async (
@@ -33,5 +35,25 @@ export const getExhibitionsByUser = async (
 
 	} catch (err) {
         return next(err)
+	}
+};
+
+export const getExhibitionById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const {exhibition_id} = req.params;
+		const exhibition: Exhibition = await fetchExhibitionById(exhibition_id)
+		const exhibitionPieces: ExhibitionPiece[] = await fetchExhibitionPiecesByExhibitionId(exhibition_id)
+
+		if(!exhibition) await Promise.reject({ status: 404, msg: "Not Found" });
+
+		exhibition.pieces = exhibitionPieces || []
+
+		res.status(200).send({exhibition})
+	} catch(err) {
+		return next(err)
 	}
 };

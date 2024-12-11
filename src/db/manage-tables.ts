@@ -40,7 +40,8 @@ export const createTables = async () => {
         exhibition_id INT NOT NULL REFERENCES exhibitions(exhibition_id),
         institution_id INT NOT NULL REFERENCES institutions(institution_id),
         piece_id VARCHAR NOT NULL,
-        piece_order INT NOT NULL,
+        piece_index INT NOT NULL,
+        img_url VARCHAR NOT NULL,
         note TEXT
         );`);
 };

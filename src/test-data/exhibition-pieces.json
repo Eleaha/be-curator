@@ -2,41 +2,37 @@
 	{
 		"id": 1,
 		"exhibition_id": 1,
-		"institution_id": 2,
-		"piece_id": "O828149",
-		"piece_order": 0,
-		"note": ""
+		"institution_id": 1,
+		"piece_id": "O828146",
+		"piece_index": 1,
+		"img_url": "https://framemark.vam.ac.uk/collections/2016JF9061/full/800,/0/default.jpg",
+		"note": "can use the given description"
 	},
 	{
 		"id": 2,
 		"exhibition_id": 1,
-		"institution_id": 2,
-		"piece_id": "O828146",
-		"piece_order": 1,
-		"note": "can use the given description"
+		"institution_id": 1,
+		"piece_id": "O1223170",
+		"piece_index": 3,
+		"img_url": "https://framemark.vam.ac.uk/collections/2011EV5414/full/800,/0/default.jpg",
+		"note": "he need some milk"
 	},
 	{
 		"id": 3,
 		"exhibition_id": 1,
-		"institution_id": 1,
-		"piece_id": "co24109",
-		"piece_order": 2,
-		"note": "qwertyuasdfg"
+		"institution_id": 2,
+		"piece_id": "RP-P-BI-5648",
+		"piece_index": 4,
+		"img_url": "https://lh3.googleusercontent.com/d7k4ZG2z1MLb5DE01dEWXj3FT6Y4rhUl-c_UnY809Qy55oVviw4JcA0mAWQqyDqSMjJOv5XyBEOu1ZASHsYbrGt7fbA=s0",
+		"note": "asdfghj"
 	},
 	{
 		"id": 4,
 		"exhibition_id": 1,
-		"institution_id": 1,
-		"piece_id": "O1223170",
-		"piece_order": 2,
-		"note": "he need some milk"
-	},
-	{
-		"id": 5,
-		"exhibition_id": 1,
 		"institution_id": 2,
-		"piece_id": "RP-P-BI-5648",
-		"piece_order": 2,
-		"note": "asdfghj"
+		"piece_id": "RP-P-BI-5650",
+		"piece_index": 5,
+		"img_url": "https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+		"note": ""
 	}
 ]

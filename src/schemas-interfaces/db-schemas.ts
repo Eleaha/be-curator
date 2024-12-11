@@ -12,7 +12,8 @@ const ExhibitionPieceSchema = z.object({
 	exhibition_id: z.number().int(),
 	institution_id: z.number().int(),
 	piece_id: z.string(),
-	piece_order: z.number().int(),
+	piece_index: z.number().int(),
+	img_url: z.string(),
 	note: z.string().max(2000).optional(),
 });
 
@@ -22,6 +23,7 @@ const ExhibitionSchema = z.object({
 	title: z.string().min(1),
 	description: z.string().max(1000).optional(),
 	bg_colour: z.string().regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/),
+	pieces: z.array(ExhibitionPieceSchema).optional()
 });
 
 const InstituteSchema = z.object({
