@@ -115,7 +115,9 @@ describe("/api/exhibitions", () => {
 
 	describe("GET /api/exhibitions/:user_id", () => {
 		test("GET 200 /api/exhibitions/user/:user_id - responds with an array of exhibitions", async () => {
-			const { body } = await request(app).get("/api/exhibitions/user/1").expect(200);
+			const { body } = await request(app)
+				.get("/api/exhibitions/user/1")
+				.expect(200);
 			const { exhibitions } = body;
 			expect(exhibitions).toHaveLength(2);
 			exhibitions.forEach((exhibition: Exhibition) => {
@@ -124,17 +126,85 @@ describe("/api/exhibitions", () => {
 			});
 		});
 		test("GET 404 /api/exhibitions/user/:user_id - valid id but non-existent user", async () => {
-			const { body } = await request(app).get("/api/exhibitions/user/6").expect(404);
+			const { body } = await request(app)
+				.get("/api/exhibitions/user/6")
+				.expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
 		test("GET 404 /api/exhibitions/user/:user_id - existing id, but no associated exhibitions", async () => {
-			const { body } = await request(app).get("/api/exhibitions/user/3").expect(404);
+			const { body } = await request(app)
+				.get("/api/exhibitions/user/3")
+				.expect(404);
 			expect(body.msg).toBe("No Exhibitions Found");
 		});
 		test("GET 400 /api/exhibitions/user/:user_id - invalid id", async () => {
 			const { body } = await request(app)
 				.get("/api/exhibitions/user/garbage")
 				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+	});
+
+	describe("GET /api/exhibitions/:exhibition_id", () => {
+		test("GET 200 /api/exhibitions/:exhibition_id - returns an exhibition object", async () => {
+			const { body } = await request(app).get("/api/exhibitions/1").expect(200);
+			const { exhibition } = body;
+			expect(exhibition).toMatchObject({
+				exhibition_id: 1,
+				user_id: 1,
+				title: "Exhibition one",
+				description: "my first exhibition",
+				bg_colour: "#c8b0db",
+				pieces: [
+					{
+						id: 1,
+						exhibition_id: 1,
+						institution_id: 1,
+						piece_id: "O828146",
+						piece_index: 1,
+						img_url:
+							"https://framemark.vam.ac.uk/collections/2016JF9061/full/800,/0/default.jpg",
+						note: "can use the given description",
+					},
+					{
+						id: 2,
+						exhibition_id: 1,
+						institution_id: 1,
+						piece_id: "O1223170",
+						piece_index: 3,
+						img_url:
+							"https://framemark.vam.ac.uk/collections/2011EV5414/full/800,/0/default.jpg",
+						note: "he need some milk",
+					},
+					{
+						id: 3,
+						exhibition_id: 1,
+						institution_id: 2,
+						piece_id: "RP-P-BI-5648",
+						piece_index: 4,
+						img_url:
+							"https://lh3.googleusercontent.com/d7k4ZG2z1MLb5DE01dEWXj3FT6Y4rhUl-c_UnY809Qy55oVviw4JcA0mAWQqyDqSMjJOv5XyBEOu1ZASHsYbrGt7fbA=s0",
+						note: "asdfghj",
+					},
+					{
+						id: 4,
+						exhibition_id: 1,
+						institution_id: 2,
+						piece_id: "RP-P-BI-5650",
+						piece_index: 5,
+						img_url:
+							"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+						note: "",
+					},
+				],
+			});
+		});
+		test("GET 404 - non existent id", async () => {
+			const { body } = await request(app).get("/api/exhibitions/3000").expect(404);
+			expect(body.msg).toBe("Not Found")
+		})
+		test("GET 400 - invalid", async () => {
+			const { body } = await request(app).get("/api/exhibitions/garbage").expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
 	});
