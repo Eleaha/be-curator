@@ -1,14 +1,14 @@
 import z from "zod";
 
 const CollectionPieceSchema = z.object({
-	id: z.number().int(),
+	id: z.number().int().optional(),
 	user_id: z.number().int(),
 	institution_id: z.number().int(),
 	piece_id: z.string(),
 });
 
 const ExhibitionPieceSchema = z.object({
-	id: z.number().int(),
+	id: z.number().int().optional(),
 	exhibition_id: z.number().int(),
 	institution_id: z.number().int(),
 	piece_id: z.string(),
@@ -18,7 +18,7 @@ const ExhibitionPieceSchema = z.object({
 });
 
 const ExhibitionSchema = z.object({
-	exhibition_id: z.number().int(),
+	exhibition_id: z.number().int().optional(),
 	user_id: z.number().int(),
 	title: z.string().min(1),
 	description: z.string().max(1000).optional(),
@@ -27,12 +27,12 @@ const ExhibitionSchema = z.object({
 });
 
 const InstituteSchema = z.object({
-	institution_id: z.number().int(),
+	institution_id: z.number().int().optional(),
 	institution_name: z.string(),
 });
 
 const UserSchema = z.object({
-	user_id: z.number().int(),
+	user_id: z.number().int().optional(),
 	username: z.string().min(1),
 	email: z.string().email(),
 });

@@ -1,26 +1,35 @@
 import z from "zod";
 
 const StandardQuerySchema = z.object({
-    search: z.string(),
-    // limit: z.string(),
-    // page: z.string(),
+	search: z.string(),
+	// limit: z.string(),
+	// page: z.string(),
 });
 
-const StandardQueriesSchema = z.record(z.string(), StandardQuerySchema)
+const StandardQueriesSchema = z.record(z.string(), StandardQuerySchema);
 
 const PieceSchema = z.object({
 	institution_id: z.string(),
 	piece_id: z.string(),
 	title: z.string(),
-    material: z.string().optional(),
+	material: z.string().optional(),
 	maker: z.string(),
 	img_url: z.string(),
 	date: z.string(),
 	description: z.string().optional(),
 });
 
-export type StandardQueries = z.infer<typeof StandardQueriesSchema>
-export type Piece = z.infer<typeof PieceSchema>
+const ExhibitionPiecePayloadSchema = z.object({
+	exhibition_id: z.coerce.number().int().optional(),
+	institution_id: z.coerce.number().int(),
+	piece_id: z.string(),
+	piece_index: z.coerce.number().int(),
+	img_url: z.string(),
+	note: z.string().max(2000).optional(),
+});
 
-export { StandardQueriesSchema, PieceSchema }
+export type StandardQueries = z.infer<typeof StandardQueriesSchema>;
+export type Piece = z.infer<typeof PieceSchema>;
+export type ExhibitionPiecePayload = z.infer<typeof ExhibitionPiecePayloadSchema>;
 
+export { StandardQueriesSchema, PieceSchema, ExhibitionPiecePayloadSchema };

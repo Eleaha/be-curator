@@ -6,11 +6,16 @@ export const handleErrors = (
 	res: Response,
 	next: NextFunction
 ) => {
-
 	const badRequestCodes: string[] = ["22P02"]
+
+	const notFoundCodes: string[] = ["23503"]
 
 	if(badRequestCodes.includes(err.code)){
 		res.status(400).send({ msg: "Bad Request" });
+	}
+
+	if (notFoundCodes.includes(err.code)) {
+		res.status(404).send({ msg: "Not Found" });
 	}
 
 	if (err.status && err.msg) {

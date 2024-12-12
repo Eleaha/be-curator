@@ -11,31 +11,31 @@ export const seed = async (testData: TestData) => {
 
 	const users = format(
 		`
-        INSERT INTO users VALUES %L;`,
+        INSERT INTO users (username, email, password, bio) VALUES %L;`,
 		testData.userData.map(Object.values)
 	);
 
 	const institutions = format(
 		`
-        INSERT INTO institutions VALUES %L;`,
+        INSERT INTO institutions (institution_name) VALUES %L;`,
 		testData.instituteData.map(Object.values)
 	);
 
 	const collectionPieces = format(
 		`
-        INSERT INTO collection_pieces VALUES %L;`,
+        INSERT INTO collection_pieces (user_id, institution_id, piece_id) VALUES %L;`,
 		testData.collectionPieceData.map(Object.values)
 	);
 
 	const exhibitions = format(
 		`
-        INSERT INTO exhibitions VALUES %L;`,
+        INSERT INTO exhibitions (user_id, title, description, bg_colour) VALUES %L;`,
 		testData.exhibitionData.map(Object.values)
 	);
 
 	const exhibitionPieces = format(
 		`
-        INSERT INTO exhibition_pieces VALUES %L;`,
+        INSERT INTO exhibition_pieces (exhibition_id, institution_id, piece_id, piece_index, img_url, note) VALUES %L;`,
 		testData.exhibitionPieceData.map(Object.values)
 	);
 
