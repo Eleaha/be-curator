@@ -7,11 +7,16 @@ import endpoints from "../src/endpoints.json";
 import { app } from "../src/app";
 import {
 	Exhibition,
+	ExhibitionPiece,
 	ExhibitionSchema,
 	User,
 	UserSchema,
 } from "../src/schemas-interfaces/db-schemas";
-import { PieceSchema, Piece } from "../src/schemas-interfaces/data-schemas";
+import {
+	PieceSchema,
+	Piece,
+	ExhibitionPiecePayload,
+} from "../src/schemas-interfaces/data-schemas";
 
 afterAll(() => db.end());
 
@@ -201,10 +206,102 @@ describe("/api/exhibitions", () => {
 		});
 		test("GET 404 - non existent id", async () => {
 			const { body } = await request(app).get("/api/exhibitions/3000").expect(404);
-			expect(body.msg).toBe("Not Found")
-		})
+			expect(body.msg).toBe("Not Found");
+		});
 		test("GET 400 - invalid", async () => {
-			const { body } = await request(app).get("/api/exhibitions/garbage").expect(400);
+			const { body } = await request(app)
+				.get("/api/exhibitions/garbage")
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+	});
+
+	describe.only("POST /api/exhibitions/:exhibition_id", () => {
+		test("POST 201 /api/exhibitions/:exhibition_id - responds with the newly created exhibition piece", async () => {
+			const payload: ExhibitionPiecePayload = {
+				institution_id: 2,
+				piece_id: "RP-P-BI-5650",
+				piece_index: 6,
+				img_url:
+					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+				note: "",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions/1")
+				.send(payload)
+				.expect(201);
+			const { exhibitionPiece } = body;
+			expect(exhibitionPiece).toEqual({
+				id: 5,
+				exhibition_id: 1,
+				institution_id: 2,
+				piece_id: "RP-P-BI-5650",
+				piece_index: 6,
+				img_url:
+					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+				note: "",
+			});
+		});
+		test("POST 404 /api/exhibitions/:exhibition_id - exhibition not found", async () => {
+			const payload: ExhibitionPiecePayload = {
+				institution_id: 2,
+				piece_id: "RP-P-BI-5650",
+				piece_index: 6,
+				img_url:
+					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+				note: "",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions/300")
+				.send(payload)
+				.expect(404);
+			expect(body.msg).toBe("Not Found")
+		});
+		//bad request - invalid id
+		//bad request - bad payload
+		test("POST 400 /api/exhibitions/:exhibition_id - invalid exhibition id", async () => {
+			const payload: ExhibitionPiecePayload = {
+				institution_id: 2,
+				piece_id: "RP-P-BI-5650",
+				piece_index: 6,
+				img_url:
+					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+				note: "",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions/garbage")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+		test("POST 400 /api/exhibitions/:exhibition_id - invalid payload data", async () => {
+			const payload: any = {
+				institution_id: 2,
+				piece_id: "RP-P-BI-5650",
+				piece_index: "garbage",
+				img_url:
+					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+				note: "",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions/1")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+		test("POST 400 /api/exhibitions/:exhibition_id - invalid payload structure", async () => {
+			const payload: any = {
+				institution_id: 2,
+				piece_id: "RP-P-BI-5650",
+				piece_index: 6,
+				garbage:
+					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
+				note: "",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions/1")
+				.send(payload)
+				.expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
 	});

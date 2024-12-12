@@ -1,6 +1,5 @@
 [
 	{
-		"id": 1,
 		"exhibition_id": 1,
 		"institution_id": 1,
 		"piece_id": "O828146",
@@ -9,7 +8,6 @@
 		"note": "can use the given description"
 	},
 	{
-		"id": 2,
 		"exhibition_id": 1,
 		"institution_id": 1,
 		"piece_id": "O1223170",
@@ -18,7 +16,6 @@
 		"note": "he need some milk"
 	},
 	{
-		"id": 3,
 		"exhibition_id": 1,
 		"institution_id": 2,
 		"piece_id": "RP-P-BI-5648",
@@ -27,7 +24,6 @@
 		"note": "asdfghj"
 	},
 	{
-		"id": 4,
 		"exhibition_id": 1,
 		"institution_id": 2,
 		"piece_id": "RP-P-BI-5650",

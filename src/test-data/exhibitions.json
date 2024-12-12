@@ -1,20 +1,17 @@
 [
 	{
-		"exhibition_id": 1,
 		"user_id": 1,
 		"title": "Exhibition one",
 		"description": "my first exhibition",
 		"bg_colour": "#c8b0db"
 	},
 	{
-		"exhibition_id": 2,
 		"user_id": 1,
 		"title": "Exhibition two",
 		"description": "my second exhibition",
 		"bg_colour": "#000000"
 	},
 	{
-		"exhibition_id": 3,
 		"user_id": 2,
 		"title": "My Exhibition",
 		"description": "exhibition",
