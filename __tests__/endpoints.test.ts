@@ -118,6 +118,81 @@ describe("/api/exhibitions", () => {
 		});
 	});
 
+	describe("POST /api/exhibitions", () => {
+		test("POST 201 /api/exhibitions - responds with the newly created exhibition", async () => {
+			const payload = {
+				user_id: 1,
+				title: "Test Exhibition",
+				description: "a test exhibition",
+				bg_colour: "#000000",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions")
+				.send(payload)
+				.expect(201);
+			const { exhibition } = body;
+			expect(exhibition).toEqual({
+				exhibition_id: 4,
+				user_id: 1,
+				title: "Test Exhibition",
+				description: "a test exhibition",
+				bg_colour: "#000000",
+			});
+		});
+		test("POST 404 /api/exhibitions - id not found", async () => {
+			const payload = {
+				user_id: 3000,
+				title: "Test Exhibition",
+				description: "a test exhibition",
+				bg_colour: "#000000",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions")
+				.send(payload)
+				.expect(404);
+			expect(body.msg).toBe("Not Found");
+		});
+		test("POST 400 /api/exhibitions - invalid id", async () => {
+			const payload = {
+				user_id: "garbage",
+				title: "Test Exhibition",
+				description: "a test exhibition",
+				bg_colour: "#000000",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+		test("POST 400 /api/exhibitions - invalid hex code for bg colour", async () => {
+			const payload = {
+				user_id: 1,
+				title: "Test Exhibition",
+				description: "a test exhibition",
+				bg_colour: "#000000000",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request - Invalid Hex Code");
+		});
+		test("POST 400 /api/exhibitions/:user_id - invalid payload structure", async () => {
+			const payload = {
+				user_id: 1,
+				title: "Test Exhibition",
+				garbage: "a test exhibition",
+				bg_colour: "#000000",
+			};
+			const { body } = await request(app)
+				.post("/api/exhibitions")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+	});
+
 	describe("GET /api/exhibitions/:user_id", () => {
 		test("GET 200 /api/exhibitions/user/:user_id - responds with an array of exhibitions", async () => {
 			const { body } = await request(app)
@@ -216,7 +291,7 @@ describe("/api/exhibitions", () => {
 		});
 	});
 
-	describe.only("POST /api/exhibitions/:exhibition_id", () => {
+	describe("POST /api/exhibitions/:exhibition_id", () => {
 		test("POST 201 /api/exhibitions/:exhibition_id - responds with the newly created exhibition piece", async () => {
 			const payload: ExhibitionPiecePayload = {
 				institution_id: 2,
@@ -255,10 +330,8 @@ describe("/api/exhibitions", () => {
 				.post("/api/exhibitions/300")
 				.send(payload)
 				.expect(404);
-			expect(body.msg).toBe("Not Found")
+			expect(body.msg).toBe("Not Found");
 		});
-		//bad request - invalid id
-		//bad request - bad payload
 		test("POST 400 /api/exhibitions/:exhibition_id - invalid exhibition id", async () => {
 			const payload: ExhibitionPiecePayload = {
 				institution_id: 2,

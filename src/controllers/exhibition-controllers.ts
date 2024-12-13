@@ -4,6 +4,7 @@ import {
 	fetchExhibitionPiecesByExhibitionId,
 	fetchExhibitions,
 	fetchExhibitionsByUser,
+	insertExhibition,
 	insertExhibitionPiece,
 } from "../models/exhibitions-models";
 import {
@@ -13,6 +14,8 @@ import {
 } from "../schemas-interfaces/db-schemas";
 import { fetchUserById } from "../models/user-models";
 import {
+	ExhibitionPayload,
+	ExhibitionPayloadSchema,
 	ExhibitionPiecePayload,
 } from "../schemas-interfaces/data-schemas";
 
@@ -35,8 +38,9 @@ export const getExhibitionsByUser = async (
 		const exhibitions: Exhibition[] = await fetchExhibitionsByUser(user_id);
 		const user: User = await fetchUserById(+user_id);
 
-		if (user && !exhibitions.length)
+		if (user && !exhibitions.length) {
 			await Promise.reject({ status: 404, msg: "No Exhibitions Found" });
+		}
 
 		exhibitions.length
 			? res.status(200).send({ exhibitions })
@@ -67,6 +71,33 @@ export const getExhibitionById = async (
 	}
 };
 
+export const postExhibition = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const validKeys: string = [
+			"user_id",
+			"title",
+			"description",
+			"bg_colour",
+		].join();
+
+		ExhibitionPayloadSchema.parse(req.body);
+
+		if (Object.keys(req.body).join() !== validKeys) {
+			await Promise.reject({ status: 400, msg: "Bad Request" });
+		}
+
+		const exhibition: Exhibition = await insertExhibition(req.body);
+
+		res.status(201).send({ exhibition });
+	} catch (err) {
+		return next(err);
+	}
+};
+
 export const postExhibPieceByExhibId = async (
 	req: Request,
 	res: Response,
@@ -88,9 +119,8 @@ export const postExhibPieceByExhibId = async (
 			exhibition_id: +exhibition_id,
 			...req.body,
 		};
-		
+
 		if (Object.keys(newExhibitionPiece).join() !== validKeys) {
-			console.log(validKeys, Object.keys(newExhibitionPiece).join());
 			await Promise.reject({ status: 400, msg: "Bad Request" });
 		}
 

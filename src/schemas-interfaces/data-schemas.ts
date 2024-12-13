@@ -28,8 +28,23 @@ const ExhibitionPiecePayloadSchema = z.object({
 	note: z.string().max(2000).optional(),
 });
 
+const ExhibitionPayloadSchema = z.object({
+	user_id: z.coerce.number().int(),
+	title: z.string().max(200),
+	description: z.string().max(1000).optional(),
+	bg_colour: z.string().regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/),
+});
+
 export type StandardQueries = z.infer<typeof StandardQueriesSchema>;
 export type Piece = z.infer<typeof PieceSchema>;
-export type ExhibitionPiecePayload = z.infer<typeof ExhibitionPiecePayloadSchema>;
+export type ExhibitionPiecePayload = z.infer<
+	typeof ExhibitionPiecePayloadSchema
+>;
+export type ExhibitionPayload = z.infer<typeof ExhibitionPayloadSchema>;
 
-export { StandardQueriesSchema, PieceSchema, ExhibitionPiecePayloadSchema };
+export {
+	StandardQueriesSchema,
+	PieceSchema,
+	ExhibitionPiecePayloadSchema,
+	ExhibitionPayloadSchema,
+};
