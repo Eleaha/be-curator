@@ -10,6 +10,23 @@ export const fetchExhibitions = async () => {
 	return rows;
 };
 
+export const insertExhibitionPiece = async (
+	payload: ExhibitionPiecePayload
+) => {
+	const formattedExhibitionPiece: any[] = Object.values(payload);
+	const queryString: string = format(
+		`
+			INSERT INTO exhibition_pieces 
+			(exhibition_id, institution_id, piece_id, piece_index, img_url, note)
+			VALUES %L
+			RETURNING *;
+		`,
+		[formattedExhibitionPiece]
+	);
+	const { rows } = await db.query(queryString);
+	return rows[0];
+};
+
 export const fetchExhibitionsByUser = async (userId: string) => {
 	const { rows } = await db.query(
 		`SELECT * FROM exhibitions WHERE user_id=$1;`,
@@ -52,19 +69,11 @@ export const insertExhibition = async (payload: ExhibitionPayload) => {
 	return rows[0];
 };
 
-export const insertExhibitionPiece = async (
-	payload: ExhibitionPiecePayload
-) => {
-	const formattedExhibitionPiece: any[] = Object.values(payload);
-	const queryString: string = format(
-		`
-			INSERT INTO exhibition_pieces 
-			(exhibition_id, institution_id, piece_id, piece_index, img_url, note)
-			VALUES %L
-			RETURNING *;
-		`,
-		[formattedExhibitionPiece]
-	);
-	const { rows } = await db.query(queryString);
-	return rows[0];
-};
+export const removeExhibitionPiece = async (exhibition_piece_id: number) => {
+	const {rows} = await db.query(
+		`DELETE FROM exhibition_pieces
+		WHERE id=$1
+		RETURNING *;`, [exhibition_piece_id]
+	)
+	return rows
+}
