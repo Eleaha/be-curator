@@ -1,5 +1,135 @@
 {
     "GET /api": {
         "description": "Serves a full list of endpoints"
-    }
+    },
+    "GET /api/users": {
+        "description": "Serves an array of users",
+        "example response": [
+        	{
+                "user_id": 1,
+        		"username": "juzz0604",
+        		"email": "justin4tobycat@hotmail.co.uk",
+        		"password": "TobyCat123!",
+        		"bio": "asdfghj"
+        	}
+        ]
+    },
+    "GET /api/pieces/:search": {
+        "description": "Serves an array of pieces, default length 20, relating to the search term given. Only pieces with images are shown",
+        "example response": "*********"
+    },
+    "GET /api/pieces/:institution_id/:piece_id": {
+        "description": "Serves a object containing the specified piece from the specified institution",
+        "example response": "*******"
+    },
+    "GET /api/exhibitions": {
+        "description": "Serves a array of exhibitions",
+        "example response": [
+        	{
+                "exhibition_id": 1,
+        		"user_id": 1,
+        		"title": "Exhibition one",
+        		"description": "my first exhibition",
+        		"bg_colour": "#c8b0db"
+        	}
+        ]
+    },
+    "POST /api/exhibitions/:user_id": {
+        "description": "Creates and serves a new exhibition relating to the specified user",
+        "example payload": "**********"
+        "example response": {
+                "exhibition_id": 1,
+        		"user_id": 1,
+        		"title": "Exhibition one",
+        		"description": "my first exhibition",
+        		"bg_colour": "#c8b0db"
+        	}
+    },
+    "GET /api/exhibitions/:exhibition_id": {
+        "description": "Serves an object containing the data for a specified exhibition",
+        "example response": {
+    		"user_id": 1,
+    		"title": "Exhibition one",
+    		"description": "my first exhibition",
+    		"bg_colour": "#c8b0db"
+            "pieces": [{
+        		"exhibition_id": 1,
+        		"institution_id": 1,
+        		"piece_id": "O828146",
+        		"piece_index": 1,
+        		"img_url": "https://framemark.vam.ac.uk/collections/2016JF9061/full/800,/0/default.jpg",
+        		"note": "description"
+        	}]
+    	}
+    },
+    "PATCH /api/exhibitions/:exhibition_id": {
+        "description": "Updates and serves the specified exhibtion",
+        "example response":{
+    		"user_id": 1,
+    		"title": "New Exhibition Title",
+    		"description": "my first exhibition",
+    		"bg_colour": "#000000"
+            "pieces": [{
+        		"exhibition_id": 1,
+        		"institution_id": 1,
+        		"piece_id": "O828146",
+        		"piece_index": 1,
+        		"img_url": "https://framemark.vam.ac.uk/collections/2016JF9061/full/800,/0/default.jpg",
+        		"note": "description"
+        	}]
+    	}
+            
+    },
+    "DELETE /api/exhibitions/:exhibition_id": {
+        "description": "Deletes the specified exhibtion",
+    },
+    "POST /api/piece/exhibitions/:exhibition_id": {
+        "description": "Creates and serves a piece relating to the specified exhibition",
+        "example payload": "*******"
+        "example response": {
+                "id": 1,
+        		"exhibition_id": 1,
+        		"institution_id": 1,
+        		"piece_id": "O828146",
+        		"piece_index": 1,
+        		"img_url": "https://framemark.vam.ac.uk/collections/2016JF9061/full/800,/0/default.jpg",
+        		"note": "description"
+        	}
+    },
+    "PATCH /api/piece/exhibitions/:exhibition_id/:piece_id": {
+        "description": "Updates and serves the specified piece relating to the specified exhibition",
+        "example payload": "*******"
+        "example response": {
+                "id": 1,
+        		"exhibition_id": 1,
+        		"institution_id": 1,
+        		"piece_id": "O828146",
+        		"piece_index": 1,
+        		"img_url": "https://framemark.vam.ac.uk/collections/2016JF9061/full/800,/0/default.jpg",
+        		"note": "new description"
+        	}
+    },
+    "DELETE /api/piece/exhibitions/:exhibition_id/:piece_id": {
+        "description": "Deletes the specified piece relating to the specified exhibition"
+    },
+    "GET /api/exhibitions/user/:user_id": {
+        "description": "Serves an array containing the exhibitions related to the specified user",
+        "example response": [{
+            "exhibition_id": 1,
+    		"user_id": 1,
+    		"title": "Exhibition one",
+    		"description": "my first exhibition",
+    		"bg_colour": "#c8b0db"
+    	}]
+    },
+    "GET /api/exhibitions/user/:user_id": {
+        "description": "Serves an array containing the exhibitions related to the specified user",
+        "example response": [{
+            "exhibition_id": 1,
+    		"user_id": 1,
+    		"title": "Exhibition one",
+    		"description": "my first exhibition",
+    		"bg_colour": "#c8b0db"
+    	}]
+    },
 }
