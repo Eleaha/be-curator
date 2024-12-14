@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import {
+	deleteExhibition,
 	deleteExhibitionPiece,
 	getExhibitionById,
 	getExhibitions,
@@ -15,6 +16,7 @@ exhibitionsRouter.post("/", postExhibition);
 
 exhibitionsRouter.get("/:exhibition_id", getExhibitionById);
 exhibitionsRouter.post("/:exhibition_id", postExhibPieceByExhibId);
+exhibitionsRouter.delete("/:exhibition_id", deleteExhibition)
 
 exhibitionsRouter.get("/user/:user_id", getExhibitionsByUser);
 exhibitionsRouter.delete("/:exhibition_piece_id", deleteExhibitionPiece)

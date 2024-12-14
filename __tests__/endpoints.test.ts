@@ -379,21 +379,27 @@ describe("/api/exhibitions", () => {
 		});
 	});
 
+	describe("DELETE /api/exhibitions/:exhibition_id", () => {
+		test("DELETE 204 /api/exhibitions/:exhibition_id - successfully deletes exhibition", async () => {
+			await request(app).delete("/api/exhibitions/1").expect(204);
+		});
+		test("DELETE 404 /api/exhibitions/:exhibition_id - non-existent id", async () => {
+			await request(app).delete("/api/exhibitions/3000").expect(404);
+		});
+		test("DELETE 400 /api/exhibitions/:exhibition_id - invalid id", async () => {
+			await request(app).delete("/api/exhibitions/garbage").expect(400);
+		});
+	});
+
 	describe("DELETE /api/exhibitions/:exhibition_piece_id", () => {
 		test("DELETE 204 /api/exhibitions/:exhibition_piece_id - successfully deletes exhibition piece", async () => {
-			await request(app)
-				.delete("/api/exhibitions/1")
-				.expect(204);
+			await request(app).delete("/api/exhibitions/1").expect(204);
 		});
 		test("DELETE 404 /api/exhibitions/:exhibition_piece_id - non-existent id", async () => {
-			await request(app)
-				.delete("/api/exhibitions/3000")
-				.expect(404);
+			await request(app).delete("/api/exhibitions/3000").expect(404);
 		});
 		test("DELETE 400 /api/exhibitions/:exhibition_piece_id - invalid id", async () => {
-			await request(app)
-				.delete("/api/exhibitions/garbage")
-				.expect(400);
+			await request(app).delete("/api/exhibitions/garbage").expect(400);
 		});
 	});
 });

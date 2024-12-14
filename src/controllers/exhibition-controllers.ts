@@ -6,6 +6,7 @@ import {
 	fetchExhibitionsByUser,
 	insertExhibition,
 	insertExhibitionPiece,
+	removeExhibition,
 	removeExhibitionPiece,
 } from "../models/exhibitions-models";
 import {
@@ -67,6 +68,24 @@ export const getExhibitionById = async (
 		exhibition.pieces = exhibitionPieces || [];
 
 		res.status(200).send({ exhibition });
+	} catch (err) {
+		return next(err);
+	}
+};
+
+export const deleteExhibition = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const { exhibition_id } = req.params;
+
+		const rows = await removeExhibition(+exhibition_id);
+
+		rows.length
+			? res.status(204).send()
+			: await Promise.reject({ status: 404, msg: "Not found" });
 	} catch (err) {
 		return next(err);
 	}

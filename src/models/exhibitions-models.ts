@@ -43,6 +43,16 @@ export const fetchExhibitionById = async (exhibitionId: string) => {
 	return rows[0];
 };
 
+export const removeExhibition = async (exhibition_id: number) => {
+	const { rows } = await db.query(
+		`DELETE FROM exhibitions
+		WHERE exhibition_id=$1
+		RETURNING *;`,
+		[exhibition_id]
+	);
+	return rows;
+};
+
 export const fetchExhibitionPiecesByExhibitionId = async (
 	exhibitionId: string
 ) => {
@@ -73,7 +83,8 @@ export const removeExhibitionPiece = async (exhibition_piece_id: number) => {
 	const {rows} = await db.query(
 		`DELETE FROM exhibition_pieces
 		WHERE id=$1
-		RETURNING *;`, [exhibition_piece_id]
+		RETURNING *;`,
+		[exhibition_piece_id]
 	)
 	return rows
 }
