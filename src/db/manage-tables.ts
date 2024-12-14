@@ -37,7 +37,7 @@ export const createTables = async () => {
 
 	await db.query(`CREATE TABLE exhibition_pieces (
         id SERIAL PRIMARY KEY,
-        exhibition_id INT NOT NULL REFERENCES exhibitions(exhibition_id),
+        exhibition_id INT NOT NULL REFERENCES exhibitions(exhibition_id) ON DELETE CASCADE,
         institution_id INT NOT NULL REFERENCES institutions(institution_id),
         piece_id VARCHAR NOT NULL,
         piece_index INT NOT NULL,
