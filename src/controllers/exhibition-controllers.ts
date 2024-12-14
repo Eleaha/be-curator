@@ -9,6 +9,7 @@ import {
 	removeExhibitionByd,
 	removeExhibitionPiece,
 	updateExhibitionById,
+	updateExhibitionPieceById,
 } from "../models/exhibitions-models";
 import {
 	Exhibition,
@@ -180,6 +181,37 @@ export const postExhibPieceByExhibId = async (
 
 		res.status(201).send({ exhibitionPiece });
 	} catch (err) {
+		return next(err);
+	}
+};
+
+export const patchExhibitionPieceById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const { exhibition_piece_id } = req.params;
+
+		const validKeys: string = ["piece_index", "note"].join();
+
+		for (const key of Object.keys(req.body)) {
+			if (!validKeys.includes(key)) {
+				await Promise.reject({ status: 400, msg: "Bad Request" });
+			}
+		}
+
+		ExhibitionUpdateSchema.parse(req.body);
+
+		const exhibitionPiece: ExhibitionPiece = await updateExhibitionPieceById(
+			+exhibition_piece_id,
+			req.body
+		);
+
+		exhibitionPiece
+			? res.status(200).send({ exhibitionPiece })
+			: await Promise.reject({ status: 404, msg: "Not Found" });
+	} catch(err) {
 		return next(err);
 	}
 };
