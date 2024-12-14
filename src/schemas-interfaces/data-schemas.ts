@@ -35,6 +35,15 @@ const ExhibitionPayloadSchema = z.object({
 	bg_colour: z.string().regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/),
 });
 
+const ExhibitionUpdateSchema = z.object({
+	title: z.string().max(200).optional(),
+	description: z.string().max(1000).optional(),
+	bg_colour: z
+		.string()
+		.regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/)
+		.optional(),
+});
+
 export type StandardQueries = z.infer<typeof StandardQueriesSchema>;
 export type Piece = z.infer<typeof PieceSchema>;
 export type ExhibitionPiecePayload = z.infer<
@@ -47,4 +56,5 @@ export {
 	PieceSchema,
 	ExhibitionPiecePayloadSchema,
 	ExhibitionPayloadSchema,
+	ExhibitionUpdateSchema,
 };

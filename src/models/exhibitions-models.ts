@@ -4,6 +4,7 @@ import {
 	ExhibitionPayload,
 	ExhibitionPiecePayload,
 } from "../schemas-interfaces/data-schemas";
+import { formatSet } from "../utils";
 
 export const fetchExhibitions = async () => {
 	const { rows } = await db.query(`SELECT * FROM exhibitions`);
@@ -43,7 +44,25 @@ export const fetchExhibitionById = async (exhibitionId: string) => {
 	return rows[0];
 };
 
-export const removeExhibition = async (exhibition_id: number) => {
+export const updateExhibitionById = async (
+	exhibitionId: number,
+	payload: { (key: string): string }
+) => {
+	const setString = formatSet(payload);
+
+	const queryString: string = format(
+		`
+			UPDATE exhibitions SET %s WHERE exhibition_id = %L
+			RETURNING *;
+		`,
+		setString, exhibitionId
+	);
+
+	const { rows } = await db.query(queryString);
+	return rows[0]
+};
+
+export const removeExhibitionByd = async (exhibition_id: number) => {
 	const { rows } = await db.query(
 		`DELETE FROM exhibitions
 		WHERE exhibition_id=$1
@@ -80,11 +99,11 @@ export const insertExhibition = async (payload: ExhibitionPayload) => {
 };
 
 export const removeExhibitionPiece = async (exhibition_piece_id: number) => {
-	const {rows} = await db.query(
+	const { rows } = await db.query(
 		`DELETE FROM exhibition_pieces
 		WHERE id=$1
 		RETURNING *;`,
 		[exhibition_piece_id]
-	)
-	return rows
-}
+	);
+	return rows;
+};

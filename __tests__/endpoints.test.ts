@@ -178,7 +178,7 @@ describe("/api/exhibitions", () => {
 				.expect(400);
 			expect(body.msg).toBe("Bad Request - Invalid Hex Code");
 		});
-		test("POST 400 /api/exhibitions/:user_id - invalid payload structure", async () => {
+		test("POST 400 /api/exhibitions - invalid payload structure", async () => {
 			const payload = {
 				user_id: 1,
 				title: "Test Exhibition",
@@ -373,6 +373,94 @@ describe("/api/exhibitions", () => {
 			};
 			const { body } = await request(app)
 				.post("/api/exhibitions/1")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+	});
+
+	describe("PATCH /api/exhibitions/:exhibition_id", () => {
+		test("PATCH 200 /api/exhibitions/:exhibition_id - responds with the newly updated exhibition", async () => {
+			const payload = {
+				description: "new test exhibition",
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/1")
+				.send(payload)
+				.expect(200);
+			const { exhibition } = body;
+			expect(exhibition).toEqual({
+				exhibition_id: 1,
+				user_id: 1,
+				title: "Exhibition one",
+				description: "new test exhibition",
+				bg_colour: "#c8b0db",
+			});
+		});
+		test("PATCH 200 /api/exhibitions/:exhibition_id - can handle multiple field updates, responds with the newly updated exhibition", async () => {
+			const payload = {
+				title: "new title",
+				description: "new test exhibition",
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/1")
+				.send(payload)
+				.expect(200);
+			const { exhibition } = body;
+			expect(exhibition).toEqual({
+				exhibition_id: 1,
+				user_id: 1,
+				title: "new title",
+				description: "new test exhibition",
+				bg_colour: "#c8b0db",
+			});
+		});
+		test("PATCH 404 /api/exhibitions/:exhibition_id - id not found", async () => {
+			const payload = {
+				description: "a test exhibition",
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/3000")
+				.send(payload)
+				.expect(404);
+			expect(body.msg).toBe("Not Found");
+		});
+		test("PATCH 400 /api/exhibitions/:exhibition_id - invalid id", async () => {
+			const payload = {
+				description: "a test exhibition",
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/garbage")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+		test("PATCH 400 /api/exhibitions/:exhibition_id - invalid hex code for bg colour", async () => {
+			const payload = {
+				bg_colour: "#000000000",
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/1")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request - Invalid Hex Code");
+		});
+		test("PATCH 400 /api/exhibitions/:exhibition_id - invalid payload structure", async () => {
+			const payload = {
+				garbage: "a test exhibition",
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/1")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
+		});
+		test("PATCH 400 /api/exhibitions/:exhibition_id - doesn't allow you to update the user", async () => {
+			const payload = {
+				user_id: 2,
+			};
+			const { body } = await request(app)
+				.patch("/api/exhibitions/1")
 				.send(payload)
 				.expect(400);
 			expect(body.msg).toBe("Bad Request");
