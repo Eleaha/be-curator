@@ -6,8 +6,9 @@ import {
 	fetchExhibitionsByUser,
 	insertExhibition,
 	insertExhibitionPiece,
-	removeExhibition,
+	removeExhibitionByd,
 	removeExhibitionPiece,
+	updateExhibitionById,
 } from "../models/exhibitions-models";
 import {
 	Exhibition,
@@ -19,6 +20,7 @@ import {
 	ExhibitionPayload,
 	ExhibitionPayloadSchema,
 	ExhibitionPiecePayload,
+	ExhibitionUpdateSchema,
 } from "../schemas-interfaces/data-schemas";
 
 export const getExhibitions = async (
@@ -73,7 +75,7 @@ export const getExhibitionById = async (
 	}
 };
 
-export const deleteExhibition = async (
+export const patchExhibitionById = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
@@ -81,7 +83,35 @@ export const deleteExhibition = async (
 	try {
 		const { exhibition_id } = req.params;
 
-		const rows = await removeExhibition(+exhibition_id);
+		const validKeys: string = ["title", "description", "bg_colour"].join();
+
+		for (const key of Object.keys(req.body)) {
+			if (!validKeys.includes(key)) {
+				await Promise.reject({ status: 400, msg: "Bad Request" });
+			}
+		}
+
+		ExhibitionUpdateSchema.parse(req.body);
+
+		const exhibition = await updateExhibitionById(+exhibition_id, req.body);
+
+		exhibition
+			? res.status(200).send({ exhibition })
+			: await Promise.reject({ status: 404, msg: "Not Found" });
+	} catch (err) {
+		return next(err);
+	}
+};
+
+export const deleteExhibitionById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const { exhibition_id } = req.params;
+
+		const rows = await removeExhibitionByd(+exhibition_id);
 
 		rows.length
 			? res.status(204).send()

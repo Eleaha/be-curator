@@ -8,7 +8,7 @@ export const handleErrors = (
 	next: NextFunction
 ) => {
 
-	const badRequestCodes: string[] = ["22P02"];
+	const badRequestCodes: string[] = ["22P02", "42703"];
 	const notFoundCodes: string[] = ["23503"];
 
 	if (badRequestCodes.includes(err.code)) {

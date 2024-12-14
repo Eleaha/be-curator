@@ -1,3 +1,4 @@
+import format from "pg-format";
 import standardisedInteractions from "./apis-standardised.json";
 import { Piece } from "./schemas-interfaces/data-schemas";
 import {
@@ -44,7 +45,7 @@ export const mapApiPieceData = (
 ) => {
 	if (institutionId === "1") {
 		const { meta, record } = rawPiece;
-		
+
 		const rawMakers: string[] = [
 			...(record.artistMakerPerson || ""),
 			...(record.artistsMakerOrganisations || ""),
@@ -83,4 +84,20 @@ export const mapApiPieceData = (
 		};
 		return piece;
 	}
+};
+
+export const formatSet = (objectToFormat: { (key: string): any }) => {
+	const columns: any[] = Object.keys(objectToFormat);
+
+	let setString: string = columns
+		.map((column: string) => {
+			return format(
+				"%I = %L",
+				column,
+				objectToFormat[column as keyof typeof objectToFormat]
+			);
+		})
+		.join(", ");
+
+	return setString;
 };
