@@ -6,6 +6,7 @@ import {
 	getExhibitions,
 	getExhibitionsByUser,
 	patchExhibitionById,
+	patchExhibitionPieceById,
 	postExhibition,
 	postExhibPieceByExhibId,
 } from "../controllers/exhibition-controllers";
@@ -22,3 +23,5 @@ exhibitionsRouter.delete("/:exhibition_id", deleteExhibitionById);
 
 exhibitionsRouter.get("/user/:user_id", getExhibitionsByUser);
 exhibitionsRouter.delete("/:exhibition_piece_id", deleteExhibitionPiece);
+
+exhibitionsRouter.patch("/piece/:exhibition_piece_id", patchExhibitionPieceById)

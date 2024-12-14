@@ -55,11 +55,12 @@ export const updateExhibitionById = async (
 			UPDATE exhibitions SET %s WHERE exhibition_id = %L
 			RETURNING *;
 		`,
-		setString, exhibitionId
+		setString,
+		exhibitionId
 	);
 
 	const { rows } = await db.query(queryString);
-	return rows[0]
+	return rows[0];
 };
 
 export const removeExhibitionByd = async (exhibition_id: number) => {
@@ -80,6 +81,25 @@ export const fetchExhibitionPiecesByExhibitionId = async (
 		[exhibitionId]
 	);
 	return rows;
+};
+
+export const updateExhibitionPieceById = async (
+	exhibitionPieceId: number,
+	payload: { (key: string): string }
+) => {
+	const setString = formatSet(payload);
+
+	const queryString: string = format(
+		`
+			UPDATE exhibition_pieces SET %s WHERE exhibition_id = %L
+			RETURNING *;
+		`,
+		setString,
+		exhibitionPieceId
+	);
+
+	const { rows } = await db.query(queryString);
+	return rows[0];
 };
 
 export const insertExhibition = async (payload: ExhibitionPayload) => {
