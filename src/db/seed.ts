@@ -4,6 +4,8 @@ import { dropTables, createTables } from "./manage-tables";
 import { db } from "./db-connection";
 
 import { TestData } from "../test-data/test-data-interfaces";
+import { testData } from "../test-data/index";
+
 
 export const seed = async (testData: TestData) => {
 	await dropTables();
@@ -50,4 +52,7 @@ export const seed = async (testData: TestData) => {
 	for (const query of queries) {
 		await db.query(query);
 	}
+	console.log("Seeded!")
 };
+
+seed(testData);

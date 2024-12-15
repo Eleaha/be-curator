@@ -1,0 +1,81 @@
+{
+    "1": {
+        "base_url": "https://api.vam.ac.uk/v2/",
+        "needs_key": false,
+        "query": {
+            "pieces": "objects/search?",
+            "piece": "museumobject/",
+            "search": "q=",
+            "location": "q_place_name=",
+            "name_of_piece": "q_object_name=",
+            "type": "q_object_type=",
+            "material": "q_material_technique=",
+            "maker": "q_actor=",
+            "img": "images_exist=1",
+            "limit": "page_size=",
+            "page": "page="
+        },
+        "data_map": {
+            "pieces_data": {
+                "data_key": "records",
+                "piece_id": "systemNumber",
+                "title": "_primaryTitle",
+                "maker_key": "_primaryMaker",
+                "maker": "name",
+                "img_key": "_images",
+                "img_url": "_iiif_image_base_url",
+                "date": "_primaryDate"
+            },
+            "piece_data": {
+                "data_key": "record",
+                "piece_id": "systemNumber",
+                "title": "titles[0].title",
+                "material": "materialsAndTechniques",
+                "maker_key": "artistMaker[0].name.text",
+                "maker": "artistMakerPerson, record.artistsMakerOrganisations, record.artistMakerPeople",
+                "img_url": "(from root) images._iiif_image + full/800,/0/default.jpg",
+                "date": "record.productionDates[0].date.text",
+                "description": "physicalDescription"
+            }
+        }
+    },
+    "2": {
+        "base_url": "https://www.rijksmuseum.nl/api/en/",
+        "needs_key": true,
+        "query": {
+            "pieces": "collection?",
+            "piece": "collection/",
+            "search": "q=",
+            "location": "q=",
+            "name_of_piece": "q=",
+            "type": "type=",
+            "material": "material=",
+            "maker": "involvedMaker=",
+            "img": "imgonly=true",
+            "limit": "ps=",
+            "page": "p=",
+            "key": "key="
+        },
+        "data_map": {
+            "pieces_data": {
+                "data_key": "artObjects",
+                "piece_id": "objectNumber",
+                "title": "title",
+                "maker": "principalOrFirstMaker",
+                "img_key": "webImage",
+                "img_url": "url",
+                "date": ""
+            },
+            "piece_data": {
+                "data_key": "artObject",
+                "piece_id": "id",
+                "title": "title",
+                "material": "physicalMedium",
+                "maker": "principalMaker",
+                "img_url": "webImage.url",
+                "date": "dating.presentingDate",
+                "description": "plaqueDescriptionEnglish"
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "user_id": 1,
+        "institution_id": 2,
+        "piece_id": "O828146"
+    },
+    {
+        "user_id": 1,
+        "institution_id": 2,
+        "piece_id": "O828149"
+    },
+    {
+        "user_id": 1,
+        "institution_id": 1,
+        "piece_id": "co24109"
+    },
+    {
+        "user_id": 1,
+        "institution_id": 1,
+        "piece_id": "co1334"
+    }
+]

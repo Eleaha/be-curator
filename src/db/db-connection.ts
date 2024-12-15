@@ -9,9 +9,9 @@ dotenv.config({
 
 const config: PoolConfig = {};
 
-if (ENV === "production") {
+if (ENV === "production" || ENV === "development") {
 	config.connectionString = process.env.DATABASE_URL;
-	config.max = 2;
+	config.max = 10;
 }
 
 if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {

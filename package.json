@@ -2,12 +2,13 @@
 	"name": "be-curator",
 	"version": "1.0.0",
 	"description": "",
-	"main": "listen.js",
+	"main": "./dist/listen.js",
 	"scripts": {
 		"test": "jest",
-		"seed": "psql -f ./src/db/db-setup.sql",
-		"start": "ts-node listen.ts",
-		"seed-prod": "NODE_ENV=production npm run seed"
+		"db-setup": "psql -f ./src/db/db-setup.sql",
+		"seed": "node ./dist/src/db/seed.js",
+		"start": "node ./dist/listen.js",
+		"seed-dev": "npx tsc && npm run db-setup && NODE_ENV=development npm run seed"
 	},
 	"keywords": [],
 	"author": "",

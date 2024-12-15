@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 import { apiRouter } from "./routes/api-router";
 import { usersRouter } from "./routes/users-router";
@@ -11,6 +12,7 @@ dotenv.config();
 
 export const app: Application = express();
 
+app.use(cors())
 app.use(express.json());
 
 app.use("/api", apiRouter);
