@@ -36,7 +36,7 @@ export const fetchPiece = async (
 	const { base_url, query } = queries[institutionId];
 
 	const apiKey: string = queries[institutionId].needs_key
-		? "?" + query.key + apiKeys[institutionId as keyof typeof apiKeys]
+		? "?" + query.key + process.env.RIJKSAPIKEY
 		: "";
 
 	const apiQuery: string = `${base_url}${query.piece}${objectId}${apiKey}`;

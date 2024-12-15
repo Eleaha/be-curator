@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createTables = exports.dropTables = void 0;
 const db_connection_1 = require("./db-connection");
 const dropTables = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("in drop tables!");
     yield db_connection_1.db.query(`DROP TABLE IF EXISTS exhibition_pieces`);
     yield db_connection_1.db.query(`DROP TABLE IF EXISTS exhibitions`);
     yield db_connection_1.db.query(`DROP TABLE IF EXISTS collection_pieces`);

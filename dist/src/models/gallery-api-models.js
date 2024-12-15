@@ -16,12 +16,11 @@ exports.fetchPiece = exports.fetchPieces = void 0;
 const axios_1 = __importDefault(require("axios"));
 const apis_standardised_json_1 = __importDefault(require("../apis-standardised.json"));
 const utils_1 = require("../utils");
-const api_keys_json_1 = __importDefault(require("../../api-keys.json"));
 const fetchPieces = (search, institutionId) => __awaiter(void 0, void 0, void 0, function* () {
     const queries = apis_standardised_json_1.default;
     const { base_url, query } = queries[institutionId];
     const apiKey = queries[institutionId].needs_key
-        ? "&" + query.key + api_keys_json_1.default[institutionId]
+        ? "&" + query.key + process.env.RIJKSAPIKEY
         : "";
     const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}${apiKey}`;
     const response = yield axios_1.default.get(apiQuery);
@@ -34,7 +33,7 @@ const fetchPiece = (institutionId, objectId) => __awaiter(void 0, void 0, void 0
     const queries = apis_standardised_json_1.default;
     const { base_url, query } = queries[institutionId];
     const apiKey = queries[institutionId].needs_key
-        ? "?" + query.key + api_keys_json_1.default[institutionId]
+        ? "?" + query.key + process.env.RIJKSAPIKEY
         : "";
     const apiQuery = `${base_url}${query.piece}${objectId}${apiKey}`;
     const response = yield axios_1.default.get(apiQuery);

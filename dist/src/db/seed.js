@@ -16,7 +16,6 @@ exports.seed = void 0;
 const pg_format_1 = __importDefault(require("pg-format"));
 const manage_tables_1 = require("./manage-tables");
 const db_connection_1 = require("./db-connection");
-const index_1 = require("../test-data/index");
 const seed = (testData) => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, manage_tables_1.dropTables)();
     yield (0, manage_tables_1.createTables)();
@@ -40,7 +39,5 @@ const seed = (testData) => __awaiter(void 0, void 0, void 0, function* () {
     for (const query of queries) {
         yield db_connection_1.db.query(query);
     }
-    console.log("Seeded!");
 });
 exports.seed = seed;
-(0, exports.seed)(index_1.testData);
