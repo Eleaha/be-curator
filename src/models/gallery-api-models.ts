@@ -1,4 +1,5 @@
 import axios from "axios";
+import dotenv from "dotenv";
 import standardisedInteractions from "../apis-standardised.json";
 import {
 	InteractionKey,
@@ -16,7 +17,7 @@ export const fetchPieces = async (
 	const { base_url, query } = queries[institutionId];
 
 	const apiKey: string = queries[institutionId].needs_key
-		? "&" + query.key + apiKeys[institutionId as keyof typeof apiKeys]
+		? "&" + query.key + process.env.RIJKSAPIKEY
 		: "";
 
 	const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}${apiKey}`;

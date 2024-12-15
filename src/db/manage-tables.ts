@@ -44,5 +44,4 @@ export const createTables = async () => {
         img_url VARCHAR NOT NULL,
         note TEXT
         );`);
-        console.log("Tables created")
 };
