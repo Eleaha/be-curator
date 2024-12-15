@@ -5,6 +5,7 @@
 	"main": "./dist/listen.js",
 	"scripts": {
 		"test": "jest",
+		"build": "npx tsc",
 		"db-setup": "psql -f ./src/db/db-setup.sql",
 		"seed": "node ./dist/src/db/seed.js",
 		"start": "node ./dist/listen.js",
