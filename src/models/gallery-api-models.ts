@@ -6,7 +6,6 @@ import {
 	StandardInteractions,
 } from "../schemas-interfaces/interfaces";
 import { mapApiPieceData, mapApiPiecesData } from "../utils";
-import apiKeys from "../../api-keys.json";
 import { Piece } from "../schemas-interfaces/data-schemas";
 
 export const fetchPieces = async (
