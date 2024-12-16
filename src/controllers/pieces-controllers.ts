@@ -3,6 +3,7 @@ import { Piece } from "../schemas-interfaces/data-schemas";
 import { fetchPiece, fetchPieces } from "../models/gallery-api-models";
 
 import standardisedInteractions from "../apis-standardised.json";
+import { read } from "fs";
 
 export const getPieces = async (
 	req: Request,
@@ -10,6 +11,7 @@ export const getPieces = async (
 	next: NextFunction
 ) => {
 	const { search } = req.params;
+	const { page } = req.query.page ? req.query : { page: "1" };
 
 	try {
 		const institutions: string[] = Object.keys(standardisedInteractions);
@@ -17,7 +19,11 @@ export const getPieces = async (
 		const pieces: Piece[] = [];
 
 		for (const institution of institutions) {
-			const institutionPieces = await fetchPieces(search as string, institution);
+			const institutionPieces = await fetchPieces(
+				search as string,
+				institution,
+				+page!
+			);
 			pieces.push(...institutionPieces);
 		}
 		pieces.length

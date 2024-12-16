@@ -10,7 +10,8 @@ import { Piece } from "../schemas-interfaces/data-schemas";
 
 export const fetchPieces = async (
 	search: string,
-	institutionId: InteractionKey
+	institutionId: InteractionKey,
+	page: number = 1
 ) => {
 	const queries: StandardInteractions = standardisedInteractions;
 	const { base_url, query } = queries[institutionId];
@@ -19,8 +20,7 @@ export const fetchPieces = async (
 		? "&" + query.key + process.env.RIJKSAPIKEY
 		: "";
 
-	const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}${apiKey}`;
-
+	const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}&${query.page}${page}${apiKey}`;
 	const response = await axios.get(apiQuery);
 	const piecesData = response.data;
 	const pieces = mapApiPiecesData(institutionId, piecesData);
