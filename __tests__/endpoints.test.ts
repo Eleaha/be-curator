@@ -47,23 +47,21 @@ describe("/api/users", () => {
 		test("GET 200 /api/users/:user_id - responds with a user object", async () => {
 			const { body } = await request(app).get("/api/users/1").expect(200);
 			const { user } = body;
-			expect(user).toEqual(
-				{
-					user_id: 1,
-					username: "juzz0604",
-					email: "justin4tobycat@hotmail.co.uk",
-					password: "TobyCat123!",
-					bio: "asdfghj"
-				}
-			)
+			expect(user).toEqual({
+				user_id: 1,
+				username: "juzz0604",
+				email: "justin4tobycat@hotmail.co.uk",
+				password: "TobyCat123!",
+				bio: "asdfghj",
+			});
 		});
 		test("GET 404 /api/users/:user_id - non-existent id", async () => {
 			const { body } = await request(app).get("/api/users/3000").expect(404);
-			expect(body.msg).toBe("Not Found")
+			expect(body.msg).toBe("Not Found");
 		});
 		test("GET 400 /api/users/:user_id - invalid id", async () => {
 			const { body } = await request(app).get("/api/users/garbage").expect(400);
-			expect(body.msg).toBe("Bad Request")
+			expect(body.msg).toBe("Bad Request");
 		});
 	});
 });
@@ -94,36 +92,35 @@ describe("/api/pieces", () => {
 			expect(body.msg).toBe("Not Found");
 		});
 	});
-});
-
-describe("/api/piece", () => {
-	describe("GET /api/piece/:institution_id/:piece_id", () => {
-		test("GET 200 /api/piece/:institution_id/:piece_id - responds with a piece object when querying institution 1", async () => {
-			const { body } = await request(app).get("/api/piece/1/O1223170").expect(200);
-			const { piece } = body;
-			const isValidData = PieceSchema.safeParse(piece);
-			expect(isValidData.success).toBe(true);
-		});
-		test("GET 200 /api/piece/:institution_id/:piece_id - responds with a piece object when querying institution 2", async () => {
+	describe("GET /api/pieces/:institution_id/:piece_id", () => {
+		test("GET 200 /api/pieces/:institution_id/:piece_id - responds with a piece object when querying institution 1", async () => {
 			const { body } = await request(app)
-				.get("/api/piece/2/SK-A-2860")
+				.get("/api/pieces/1/O1223170")
 				.expect(200);
 			const { piece } = body;
 			const isValidData = PieceSchema.safeParse(piece);
 			expect(isValidData.success).toBe(true);
 		});
-		test("GET 400 /api/piece/:institution_id/:piece_id - invalid institution_id", async () => {
+		test("GET 200 /api/pieces/:institution_id/:piece_id - responds with a piece object when querying institution 2", async () => {
 			const { body } = await request(app)
-				.get("/api/piece/garbage/SK-A-2860")
+				.get("/api/pieces/2/SK-A-2860")
+				.expect(200);
+			const { piece } = body;
+			const isValidData = PieceSchema.safeParse(piece);
+			expect(isValidData.success).toBe(true);
+		});
+		test("GET 400 /api/pieces/:institution_id/:piece_id - invalid institution_id", async () => {
+			const { body } = await request(app)
+				.get("/api/pieces/garbage/SK-A-2860")
 				.expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
-		test("GET 404 /api/piece/:institution_id/:piece_id - piece not found for institution 1", async () => {
-			const { body } = await request(app).get("/api/piece/1/garbage").expect(404);
+		test("GET 404 /api/pieces/:institution_id/:piece_id - piece not found for institution 1", async () => {
+			const { body } = await request(app).get("/api/pieces/1/garbage").expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
-		test("GET 404 /api/piece/:institution_id/:piece_id - piece not found for institution 2", async () => {
-			const { body } = await request(app).get("/api/piece/2/garbage").expect(404);
+		test("GET 404 /api/pieces/:institution_id/:piece_id - piece not found for institution 2", async () => {
+			const { body } = await request(app).get("/api/pieces/2/garbage").expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
 	});
@@ -217,7 +214,7 @@ describe("/api/exhibitions", () => {
 		});
 	});
 
-	describe("GET /api/exhibitions/:user_id", () => {
+	describe("GET /api/exhibitions/user/:user_id", () => {
 		test("GET 200 /api/exhibitions/user/:user_id - responds with an array of exhibitions", async () => {
 			const { body } = await request(app)
 				.get("/api/exhibitions/user/1")

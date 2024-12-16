@@ -1,6 +1,7 @@
 import express, { Router } from "express";
-import { getUsers } from "../controllers/users-controllers";
+import { getUserById, getUsers } from "../controllers/users-controllers";
 
 export const usersRouter: Router = express.Router();
 
 usersRouter.get("/", getUsers);
+usersRouter.get("/:user_id", getUserById)
