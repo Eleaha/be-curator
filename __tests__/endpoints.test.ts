@@ -42,6 +42,30 @@ describe("/api/users", () => {
 			});
 		});
 	});
+
+	describe("GET /api/users/:user_id", () => {
+		test.only("GET 200 /api/users/:user_id - responds with a user object", async () => {
+			const { body } = await request(app).get("/api/users/1").expect(200);
+			const { user } = body;
+			expect(user).toEqual(
+				{
+					user_id: 1,
+					username: "juzz0604",
+					email: "justin4tobycat@hotmail.co.uk",
+					password: "TobyCat123!",
+					bio: "asdfghj"
+				}
+			)
+		});
+		test("GET 404 /api/users/:user_id - non-existent id", async () => {
+			const { body } = await request(app).get("/api/users/3000").expect(404);
+			expect(body.msg).toBe("Not Found")
+		});
+		test("GET 400 /api/users/:user_id - invalid id", async () => {
+			const { body } = await request(app).get("/api/users/garbage").expect(400);
+			expect(body.msg).toBe("Bad Request")
+		});
+	});
 });
 
 describe("/api/pieces", () => {
