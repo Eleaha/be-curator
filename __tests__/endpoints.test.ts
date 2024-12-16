@@ -44,7 +44,7 @@ describe("/api/users", () => {
 	});
 
 	describe("GET /api/users/:user_id", () => {
-		test.only("GET 200 /api/users/:user_id - responds with a user object", async () => {
+		test("GET 200 /api/users/:user_id - responds with a user object", async () => {
 			const { body } = await request(app).get("/api/users/1").expect(200);
 			const { user } = body;
 			expect(user).toEqual(
