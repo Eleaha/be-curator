@@ -87,9 +87,40 @@ describe("/api/pieces", () => {
 				expect(isValidData.success).toBe(true);
 			});
 		});
+		test("GET 200 /api/pieces/:search - allows for a page parameter to be passed", async () => {
+			const pageOne = await request(app)
+				.get("/api/pieces/ancient+egypt?page=1")
+				.expect(200);
+			const pageTwo = await request(app)
+				.get("/api/pieces/ancient+egypt?page=2")
+				.expect(200);
+
+			expect(pageOne.body.pieces).not.toEqual(pageTwo.body.pieces);
+
+			pageOne.body.pieces.forEach((piece: Piece) => {
+				const isValidData = PieceSchema.safeParse(piece);
+				expect(isValidData.success).toBe(true);
+			});
+			pageTwo.body.pieces.forEach((piece: Piece) => {
+				const isValidData = PieceSchema.safeParse(piece);
+				expect(isValidData.success).toBe(true);
+			});
+		});
 		test("GET 404 - /api/pieces/:search - throws a 404 when no results come up in search", async () => {
 			const { body } = await request(app).get("/api/pieces/asdfghjkl").expect(404);
 			expect(body.msg).toBe("Not Found");
+		});
+		test("GET 404 - /api/pieces/:search - page number is too high", async () => {
+			const { body } = await request(app)
+				.get("/api/pieces/flowers?page=10000")
+				.expect(404);
+			expect(body.msg).toBe("Not Found");
+		});
+		test("GET 400 - /api/pieces/:search - page number is too high", async () => {
+			const { body } = await request(app)
+				.get("/api/pieces/flowers?page=garbage")
+				.expect(400);
+			expect(body.msg).toBe("Bad Request");
 		});
 	});
 	describe("GET /api/pieces/:institution_id/:piece_id", () => {

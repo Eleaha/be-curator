@@ -16,13 +16,13 @@ exports.fetchPiece = exports.fetchPieces = void 0;
 const axios_1 = __importDefault(require("axios"));
 const apis_standardised_json_1 = __importDefault(require("../apis-standardised.json"));
 const utils_1 = require("../utils");
-const fetchPieces = (search, institutionId) => __awaiter(void 0, void 0, void 0, function* () {
+const fetchPieces = (search_1, institutionId_1, ...args_1) => __awaiter(void 0, [search_1, institutionId_1, ...args_1], void 0, function* (search, institutionId, page = 1) {
     const queries = apis_standardised_json_1.default;
     const { base_url, query } = queries[institutionId];
     const apiKey = queries[institutionId].needs_key
         ? "&" + query.key + process.env.RIJKSAPIKEY
         : "";
-    const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}${apiKey}`;
+    const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}&${query.page}${page}${apiKey}`;
     const response = yield axios_1.default.get(apiQuery);
     const piecesData = response.data;
     const pieces = (0, utils_1.mapApiPiecesData)(institutionId, piecesData);

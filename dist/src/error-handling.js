@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleErrors = void 0;
+const axios_1 = require("axios");
 const zod_1 = require("zod");
 const handleErrors = (err, req, res, next) => {
     const badRequestCodes = ["22P02", "42703"];
@@ -11,8 +12,18 @@ const handleErrors = (err, req, res, next) => {
     if (notFoundCodes.includes(err.code)) {
         res.status(404).send({ msg: "Not Found" });
     }
+    if (err instanceof axios_1.AxiosError) {
+        const { message } = err;
+        if (message === "Request failed with status code 500") {
+            res.status(404).send({ msg: "Not Found" });
+        }
+        if (message === "Request failed with status code 422") {
+            res.status(400).send({ msg: "Bad Request" });
+        }
+    }
     if (err instanceof zod_1.ZodError) {
-        if (err.errors[0].path[0] === "bg_colour" && err.errors[0].code === "invalid_string") {
+        if (err.errors[0].path[0] === "bg_colour" &&
+            err.errors[0].code === "invalid_string") {
             res.status(400).send({ msg: "Bad Request - Invalid Hex Code" });
         }
         if (err.errors[0].code === "invalid_type") {

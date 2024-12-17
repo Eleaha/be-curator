@@ -17,11 +17,12 @@ const gallery_api_models_1 = require("../models/gallery-api-models");
 const apis_standardised_json_1 = __importDefault(require("../apis-standardised.json"));
 const getPieces = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { search } = req.params;
+    const { page } = req.query.page ? req.query : { page: "1" };
     try {
         const institutions = Object.keys(apis_standardised_json_1.default);
         const pieces = [];
         for (const institution of institutions) {
-            const institutionPieces = yield (0, gallery_api_models_1.fetchPieces)(search, institution);
+            const institutionPieces = yield (0, gallery_api_models_1.fetchPieces)(search, institution, +page);
             pieces.push(...institutionPieces);
         }
         pieces.length

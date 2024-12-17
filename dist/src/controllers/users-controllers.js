@@ -9,10 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = void 0;
+exports.getUserById = exports.getUsers = void 0;
 const user_models_1 = require("../models/user-models");
 const getUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, user_models_1.fetchUsers)();
     res.status(200).send({ users });
 });
 exports.getUsers = getUsers;
+const getUserById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { user_id } = req.params;
+        const user = yield (0, user_models_1.fetchUserById)(+user_id);
+        user
+            ? res.status(200).send({ user })
+            : yield Promise.reject({ status: 404, msg: "Not Found" });
+    }
+    catch (err) {
+        return next(err);
+    }
+});
+exports.getUserById = getUserById;
