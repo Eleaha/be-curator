@@ -68,7 +68,7 @@
             },
             "piece_data": {
                 "data_key": "artObject",
-                "piece_id": "id",
+                "piece_id": "objectNumber",
                 "title": "title",
                 "material": "physicalMedium",
                 "maker": "principalMaker",

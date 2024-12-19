@@ -13,6 +13,7 @@ exports.deleteExhibitionPiece = exports.patchExhibitionPieceById = exports.postE
 const exhibitions_models_1 = require("../models/exhibitions-models");
 const user_models_1 = require("../models/user-models");
 const data_schemas_1 = require("../schemas-interfaces/data-schemas");
+const exhbition_piece_models_1 = require("../models/exhbition-piece-models");
 const getExhibitions = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const exhibitions = yield (0, exhibitions_models_1.fetchExhibitions)();
     res.status(200).send({ exhibitions });
@@ -108,13 +109,14 @@ const postExhibPieceByExhibId = (req, res, next) => __awaiter(void 0, void 0, vo
         const { exhibition_id } = req.params;
         const validKeys = [
             "exhibition_id",
+            "piece_index",
             "institution_id",
             "piece_id",
-            "piece_index",
             "img_url",
             "note",
         ].join();
-        const newExhibitionPiece = Object.assign({ exhibition_id: +exhibition_id }, req.body);
+        const pieceIndex = yield (0, exhbition_piece_models_1.fetchNumberOfPiecesByExhibition)(+exhibition_id);
+        const newExhibitionPiece = Object.assign({ exhibition_id: +exhibition_id, piece_index: +pieceIndex + 1 }, req.body);
         if (Object.keys(newExhibitionPiece).join() !== validKeys) {
             yield Promise.reject({ status: 400, msg: "Bad Request" });
         }

@@ -25,7 +25,7 @@ const insertExhibitionPiece = (payload) => __awaiter(void 0, void 0, void 0, fun
     const formattedExhibitionPiece = Object.values(payload);
     const queryString = (0, pg_format_1.default)(`
 			INSERT INTO exhibition_pieces 
-			(exhibition_id, institution_id, piece_id, piece_index, img_url, note)
+			(exhibition_id, piece_index, institution_id, piece_id, img_url, note)
 			VALUES %L
 			RETURNING *;
 		`, [formattedExhibitionPiece]);

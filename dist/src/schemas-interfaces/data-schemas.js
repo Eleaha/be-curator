@@ -27,7 +27,7 @@ const ExhibitionPiecePayloadSchema = zod_1.default.object({
     exhibition_id: zod_1.default.coerce.number().int().optional(),
     institution_id: zod_1.default.coerce.number().int(),
     piece_id: zod_1.default.string(),
-    piece_index: zod_1.default.coerce.number().int(),
+    // piece_index: z.coerce.number().int(),
     img_url: zod_1.default.string(),
     note: zod_1.default.string().max(2000).optional(),
 });
