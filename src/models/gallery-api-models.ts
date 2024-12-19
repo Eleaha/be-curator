@@ -44,7 +44,6 @@ export const fetchPiece = async (
 	const pieceData = response.data;
 
 	if (pieceData.artObjectPage === null) await Promise.reject({ status: 404, msg: "Not Found" });
-
 	const piece: Piece = mapApiPieceData(institutionId, pieceData)!;
 	return piece;
 };
