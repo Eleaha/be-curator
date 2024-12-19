@@ -74,7 +74,7 @@ export const mapApiPieceData = (
 
 		const piece: Piece = {
 			institution_id: institutionId,
-			piece_id: artObject.id,
+			piece_id: artObject.objectNumber,
 			title: artObject.title || "Unknown",
 			material: artObject.physicalMedium || "Unknown",
 			maker: artObject.principalMaker || "Unknown",

@@ -42,6 +42,7 @@ export const fetchPiece = async (
 	const apiQuery: string = `${base_url}${query.piece}${objectId}${apiKey}`;
 	const response = await axios.get(apiQuery);
 	const pieceData = response.data;
+	console.log(pieceData);
 
 	if (pieceData.artObjectPage === null) await Promise.reject({ status: 404, msg: "Not Found" });
 	const piece: Piece = mapApiPieceData(institutionId, pieceData)!;

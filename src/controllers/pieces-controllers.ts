@@ -3,7 +3,6 @@ import { Piece } from "../schemas-interfaces/data-schemas";
 import { fetchPiece, fetchPieces } from "../models/gallery-api-models";
 
 import standardisedInteractions from "../apis-standardised.json";
-import { read } from "fs";
 
 export const getPieces = async (
 	req: Request,
@@ -26,6 +25,7 @@ export const getPieces = async (
 			);
 			pieces.push(...institutionPieces);
 		}
+
 		pieces.length
 			? res.status(200).send({ pieces })
 			: await Promise.reject({ status: 404, msg: "Not Found" });
