@@ -23,7 +23,7 @@ const ExhibitionPiecePayloadSchema = z.object({
 	exhibition_id: z.coerce.number().int().optional(),
 	institution_id: z.coerce.number().int(),
 	piece_id: z.string(),
-	piece_index: z.coerce.number().int(),
+	// piece_index: z.coerce.number().int(),
 	img_url: z.string(),
 	note: z.string().max(2000).optional(),
 });

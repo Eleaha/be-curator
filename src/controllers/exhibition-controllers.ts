@@ -23,6 +23,7 @@ import {
 	ExhibitionPiecePayload,
 	ExhibitionUpdateSchema,
 } from "../schemas-interfaces/data-schemas";
+import { fetchNumberOfPiecesByExhibition } from "../models/exhbition-piece-models";
 
 export const getExhibitions = async (
 	req: Request,
@@ -159,15 +160,17 @@ export const postExhibPieceByExhibId = async (
 
 		const validKeys: string = [
 			"exhibition_id",
+			"piece_index",
 			"institution_id",
 			"piece_id",
-			"piece_index",
 			"img_url",
 			"note",
 		].join();
 
+		const pieceIndex = await fetchNumberOfPiecesByExhibition(+exhibition_id);
 		const newExhibitionPiece: ExhibitionPiecePayload = {
 			exhibition_id: +exhibition_id,
+			piece_index: +pieceIndex! + 1,
 			...req.body,
 		};
 
@@ -211,7 +214,7 @@ export const patchExhibitionPieceById = async (
 		exhibitionPiece
 			? res.status(200).send({ exhibitionPiece })
 			: await Promise.reject({ status: 404, msg: "Not Found" });
-	} catch(err) {
+	} catch (err) {
 		return next(err);
 	}
 };

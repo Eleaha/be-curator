@@ -348,7 +348,6 @@ describe("/api/exhibitions", () => {
 			const payload: ExhibitionPiecePayload = {
 				institution_id: 2,
 				piece_id: "RP-P-BI-5650",
-				piece_index: 6,
 				img_url:
 					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
 				note: "",
@@ -363,7 +362,7 @@ describe("/api/exhibitions", () => {
 				exhibition_id: 1,
 				institution_id: 2,
 				piece_id: "RP-P-BI-5650",
-				piece_index: 6,
+				piece_index: 5,
 				img_url:
 					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
 				note: "",
@@ -373,7 +372,6 @@ describe("/api/exhibitions", () => {
 			const payload: ExhibitionPiecePayload = {
 				institution_id: 2,
 				piece_id: "RP-P-BI-5650",
-				piece_index: 6,
 				img_url:
 					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
 				note: "",
@@ -388,7 +386,6 @@ describe("/api/exhibitions", () => {
 			const payload: ExhibitionPiecePayload = {
 				institution_id: 2,
 				piece_id: "RP-P-BI-5650",
-				piece_index: 6,
 				img_url:
 					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
 				note: "",
@@ -401,9 +398,8 @@ describe("/api/exhibitions", () => {
 		});
 		test("POST 400 /api/exhibitions/:exhibition_id - invalid payload data", async () => {
 			const payload: any = {
-				institution_id: 2,
+				institution_id: "garbage",
 				piece_id: "RP-P-BI-5650",
-				piece_index: "garbage",
 				img_url:
 					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
 				note: "",
@@ -418,7 +414,6 @@ describe("/api/exhibitions", () => {
 			const payload: any = {
 				institution_id: 2,
 				piece_id: "RP-P-BI-5650",
-				piece_index: 6,
 				garbage:
 					"https://lh3.googleusercontent.com/mptDoFPaVB4Jmex-IBmXhemAo9LeRKYhmrOtuAuKv6a9rUHeLk6WV9cwQqOs3IDWLqkhQPTojqJmRzWn16sd1cO0=s0",
 				note: "",
