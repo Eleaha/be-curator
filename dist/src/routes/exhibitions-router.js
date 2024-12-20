@@ -14,5 +14,5 @@ exports.exhibitionsRouter.post("/:exhibition_id", exhibition_controllers_1.postE
 exports.exhibitionsRouter.patch("/:exhibition_id", exhibition_controllers_1.patchExhibitionById);
 exports.exhibitionsRouter.delete("/:exhibition_id", exhibition_controllers_1.deleteExhibitionById);
 exports.exhibitionsRouter.get("/user/:user_id", exhibition_controllers_1.getExhibitionsByUser);
-exports.exhibitionsRouter.patch("/piece/:exhibition_piece_id", exhibition_controllers_1.patchExhibitionPieceById);
+exports.exhibitionsRouter.patch("/pieces/:exhibition_piece_id", exhibition_controllers_1.patchExhibitionPieceById);
 exports.exhibitionsRouter.delete("/pieces/:exhibition_piece_id", exhibition_controllers_1.deleteExhibitionPiece);
