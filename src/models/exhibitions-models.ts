@@ -91,14 +91,14 @@ export const updateExhibitionPieceById = async (
 
 	const queryString: string = format(
 		`
-			UPDATE exhibition_pieces SET %s WHERE exhibition_id = %L
+			UPDATE exhibition_pieces SET %s WHERE id = %L
 			RETURNING *;
 		`,
 		setString,
 		exhibitionPieceId
 	);
-
 	const { rows } = await db.query(queryString);
+	console.log(rows)
 	return rows[0];
 };
 

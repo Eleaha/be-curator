@@ -72,6 +72,7 @@ const updateExhibitionPieceById = (exhibitionPieceId, payload) => __awaiter(void
 			RETURNING *;
 		`, setString, exhibitionPieceId);
     const { rows } = yield db_connection_1.db.query(queryString);
+    console.log(rows);
     return rows[0];
 });
 exports.updateExhibitionPieceById = updateExhibitionPieceById;

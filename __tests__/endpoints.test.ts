@@ -527,7 +527,7 @@ describe("/api/exhibitions", () => {
 	});
 
 	describe("PATCH /api/exhibitions/pieces/:exhibition_piece_id", () => {
-		test("PATCH 200 /api/exhibitions/pieces/:exhibition_piece_id - responds with the newly updated exhibition piece", async () => {
+		test.only("PATCH 200 /api/exhibitions/pieces/:exhibition_piece_id - responds with the newly updated exhibition piece", async () => {
 			const payload = {
 				note: "new note",
 			};
