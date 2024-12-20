@@ -55,7 +55,7 @@ const mapApiPieceData = (institutionId, rawPiece) => {
         const { artObject } = rawPiece;
         const piece = {
             institution_id: institutionId,
-            piece_id: artObject.id,
+            piece_id: artObject.objectNumber,
             title: artObject.title || "Unknown",
             material: artObject.physicalMedium || "Unknown",
             maker: artObject.principalMaker || "Unknown",

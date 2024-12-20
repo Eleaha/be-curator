@@ -526,13 +526,13 @@ describe("/api/exhibitions", () => {
 		});
 	});
 
-	describe("PATCH /api/exhibitions/piece/:exhibition_piece_id", () => {
-		test("PATCH 200 /api/exhibitions/piece/:exhibition_piece_id - responds with the newly updated exhibition piece", async () => {
+	describe("PATCH /api/exhibitions/pieces/:exhibition_piece_id", () => {
+		test("PATCH 200 /api/exhibitions/pieces/:exhibition_piece_id - responds with the newly updated exhibition piece", async () => {
 			const payload = {
 				note: "new note",
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/1")
+				.patch("/api/exhibitions/pieces/1")
 				.send(payload)
 				.expect(200);
 			const { exhibitionPiece } = body;
@@ -547,13 +547,13 @@ describe("/api/exhibitions", () => {
 				note: "new note",
 			});
 		});
-		test("PATCH 200 /api/exhibitions/piece/:exhibition_piece_id - can handle multiple field updates, responds with the newly updated exhibition piece", async () => {
+		test("PATCH 200 /api/exhibitions/pieces/:exhibition_piece_id - can handle multiple field updates, responds with the newly updated exhibition piece", async () => {
 			const payload = {
 				piece_index: 6,
 				note: "new note",
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/1")
+				.patch("/api/exhibitions/pieces/1")
 				.send(payload)
 				.expect(200);
 			const { exhibitionPiece } = body;
@@ -568,71 +568,71 @@ describe("/api/exhibitions", () => {
 				note: "new note",
 			});
 		});
-		test("PATCH 404 /api/exhibitions/piece/:exhibition_piece_id - non-existent id", async () => {
+		test("PATCH 404 /api/exhibitions/pieces/:exhibition_piece_id - non-existent id", async () => {
 			const payload = {
 				piece_index: 6,
 				note: "new note",
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/3000")
+				.patch("/api/exhibitions/pieces/3000")
 				.send(payload)
 				.expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
-		test("PATCH 400 /api/exhibitions/piece/:exhibition_piece_id - invalid id", async () => {
+		test("PATCH 400 /api/exhibitions/pieces/:exhibition_piece_id - invalid id", async () => {
 			const payload = {
 				piece_index: 6,
 				note: "new note",
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/garbage")
+				.patch("/api/exhibitions/pieces/garbage")
 				.send(payload)
 				.expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
-		test("PATCH 400 /api/exhibitions/piece/:exhibition_piece_id - only allows for the piece index and note to be updated", async () => {
+		test("PATCH 400 /api/exhibitions/pieces/:exhibition_piece_id - only allows for the piece index and note to be updated", async () => {
 			const payload = {
 				piece_id: 4,
 				piece_index: 6,
 				note: "new note",
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/1")
+				.patch("/api/exhibitions/pieces/1")
 				.send(payload)
 				.expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
-		test("PATCH 400 /api/exhibitions/piece/:exhibition_piece_id - invalid payload structure", async () => {
+		test("PATCH 400 /api/exhibitions/pieces/:exhibition_piece_id - invalid payload structure", async () => {
 			const payload = {
 				garbage: 6,
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/1")
+				.patch("/api/exhibitions/pieces/1")
 				.send(payload)
 				.expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
-		test("PATCH 400 /api/exhibitions/piece/:exhibition_piece_id - invalid payload data", async () => {
+		test("PATCH 400 /api/exhibitions/pieces/:exhibition_piece_id - invalid payload data", async () => {
 			const payload = {
 				piece_index: "six",
 			};
 			const { body } = await request(app)
-				.patch("/api/exhibitions/piece/1")
+				.patch("/api/exhibitions/pieces/1")
 				.send(payload)
 				.expect(400);
 			expect(body.msg).toBe("Bad Request");
 		});
 	});
 
-	describe("DELETE /api/exhibitions/:exhibition_piece_id", () => {
-		test("DELETE 204 /api/exhibitions/:exhibition_piece_id - successfully deletes exhibition piece", async () => {
-			await request(app).delete("/api/exhibitions/1").expect(204);
+	describe("DELETE /api/exhibitions/pieces/:exhibition_piece_id", () => {
+		test("DELETE 204 /api/exhibitions/pieces/:exhibition_piece_id - successfully deletes exhibition piece", async () => {
+			await request(app).delete("/api/exhibitions/pieces/1").expect(204);
 		});
 		test("DELETE 404 /api/exhibitions/:exhibition_piece_id - non-existent id", async () => {
-			await request(app).delete("/api/exhibitions/3000").expect(404);
+			await request(app).delete("/api/exhibitions/pieces/3000").expect(404);
 		});
 		test("DELETE 400 /api/exhibitions/:exhibition_piece_id - invalid id", async () => {
-			await request(app).delete("/api/exhibitions/garbage").expect(400);
+			await request(app).delete("/api/exhibitions/pieces/garbage").expect(400);
 		});
 	});
 });
