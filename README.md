@@ -1,7 +1,7 @@
 # Curator API
 ## An API that lets you browse and build personal exhibitions of art and artifacts from the VandA and the Rijks museum.
 
-[Hosted API](https://dev-curator.onrender.com)
+[Hosted API](https://dev-curator.onrender.com/api)
 [Frontend repo](https://github.com/Eleaha/fe-curator)
 
 ## Tech Stack
