@@ -1,4 +1,5 @@
 node_modules
 .env*
-__help__
+__help__.md
 api-keys.json
+dist

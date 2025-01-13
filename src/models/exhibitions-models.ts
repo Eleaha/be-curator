@@ -98,7 +98,6 @@ export const updateExhibitionPieceById = async (
 		exhibitionPieceId
 	);
 	const { rows } = await db.query(queryString);
-	console.log(rows)
 	return rows[0];
 };
 

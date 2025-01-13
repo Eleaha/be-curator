@@ -106,17 +106,17 @@ describe("/api/pieces", () => {
 				expect(isValidData.success).toBe(true);
 			});
 		});
-		test("GET 404 - /api/pieces/:search - throws a 404 when no results come up in search", async () => {
+		test("GET 404 /api/pieces/:search - throws a 404 when no results come up in search", async () => {
 			const { body } = await request(app).get("/api/pieces/asdfghjkl").expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
-		test("GET 404 - /api/pieces/:search - page number is too high", async () => {
+		test("GET 404 /api/pieces/:search - page number is too high", async () => {
 			const { body } = await request(app)
 				.get("/api/pieces/flowers?page=10000")
 				.expect(404);
 			expect(body.msg).toBe("Not Found");
 		});
-		test("GET 400 - /api/pieces/:search - page number is too high", async () => {
+		test("GET 400 /api/pieces/:search - page number is too high", async () => {
 			const { body } = await request(app)
 				.get("/api/pieces/flowers?page=garbage")
 				.expect(400);
@@ -129,6 +129,7 @@ describe("/api/pieces", () => {
 				.get("/api/pieces/1/O1223170")
 				.expect(200);
 			const { piece } = body;
+
 			const isValidData = PieceSchema.safeParse(piece);
 			expect(isValidData.success).toBe(true);
 		});
@@ -527,7 +528,7 @@ describe("/api/exhibitions", () => {
 	});
 
 	describe("PATCH /api/exhibitions/pieces/:exhibition_piece_id", () => {
-		test.only("PATCH 200 /api/exhibitions/pieces/:exhibition_piece_id - responds with the newly updated exhibition piece", async () => {
+		test("PATCH 200 /api/exhibitions/pieces/:exhibition_piece_id - responds with the newly updated exhibition piece", async () => {
 			const payload = {
 				note: "new note",
 			};

@@ -11,7 +11,7 @@ import { Piece } from "../schemas-interfaces/data-schemas";
 export const fetchPieces = async (
 	search: string,
 	institutionId: InteractionKey,
-	page: number = 1
+	page: number
 ) => {
 	const queries: StandardInteractions = standardisedInteractions;
 	const { base_url, query } = queries[institutionId];
