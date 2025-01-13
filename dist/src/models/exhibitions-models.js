@@ -68,11 +68,10 @@ exports.fetchExhibitionPiecesByExhibitionId = fetchExhibitionPiecesByExhibitionI
 const updateExhibitionPieceById = (exhibitionPieceId, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const setString = (0, utils_1.formatSet)(payload);
     const queryString = (0, pg_format_1.default)(`
-			UPDATE exhibition_pieces SET %s WHERE exhibition_id = %L
+			UPDATE exhibition_pieces SET %s WHERE id = %L
 			RETURNING *;
 		`, setString, exhibitionPieceId);
     const { rows } = yield db_connection_1.db.query(queryString);
-    console.log(rows);
     return rows[0];
 });
 exports.updateExhibitionPieceById = updateExhibitionPieceById;

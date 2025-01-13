@@ -16,7 +16,7 @@ exports.fetchPiece = exports.fetchPieces = void 0;
 const axios_1 = __importDefault(require("axios"));
 const apis_standardised_json_1 = __importDefault(require("../apis-standardised.json"));
 const utils_1 = require("../utils");
-const fetchPieces = (search_1, institutionId_1, ...args_1) => __awaiter(void 0, [search_1, institutionId_1, ...args_1], void 0, function* (search, institutionId, page = 1) {
+const fetchPieces = (search, institutionId, page) => __awaiter(void 0, void 0, void 0, function* () {
     const queries = apis_standardised_json_1.default;
     const { base_url, query } = queries[institutionId];
     const apiKey = queries[institutionId].needs_key
