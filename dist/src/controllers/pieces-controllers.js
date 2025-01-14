@@ -18,12 +18,12 @@ const apis_standardised_json_1 = __importDefault(require("../apis-standardised.j
 const getPieces = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { search } = req.params;
-        const page = req.query.page ? req.query.page : "1";
+        const { page } = req.query.page ? req.query : { page: "1" };
         if (isNaN(+page)) {
-            yield Promise.reject({ status: 400, msg: 'Bad Request' });
+            yield Promise.reject({ status: 400, msg: "Bad Request" });
         }
         const institutions = Object.keys(apis_standardised_json_1.default);
-        let piecesByInstitution = yield Promise.all(institutions.map((institution) => (0, gallery_api_models_1.fetchPieces)(search, institution, +page)));
+        const piecesByInstitution = yield Promise.all(institutions.map((institution) => (0, gallery_api_models_1.fetchPieces)(search, institution, +page)));
         const pieces = piecesByInstitution.flat();
         pieces.length
             ? res.status(200).send({ pieces })

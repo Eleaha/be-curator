@@ -11,15 +11,15 @@ export const getPieces = async (
 ) => {
 	try {
 		const { search } = req.params;
-		const page = req.query.page ? req.query.page : "1";
+		const { page } = req.query.page ? req.query : { page: "1" };
 
-		if (isNaN(+page)){
-			await Promise.reject({status: 400, msg: 'Bad Request'})
+		if (isNaN(+page!)) {
+			await Promise.reject({ status: 400, msg: "Bad Request" });
 		}
-		
+
 		const institutions: string[] = Object.keys(standardisedInteractions);
 
-		let piecesByInstitution: Piece[][] = await Promise.all(
+		const piecesByInstitution = await Promise.all(
 			institutions.map((institution: string) =>
 				fetchPieces(search as string, institution, +page!)
 			)

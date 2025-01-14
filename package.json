@@ -9,6 +9,7 @@
 		"db-setup": "psql -f ./src/db/db-setup.sql",
 		"seed": "node ./dist/src/db/seed.js",
 		"start": "node ./dist/listen.js",
+		"start-dev": "ts-node ./listen.ts",
 		"seed-dev": "npx tsc && NODE_ENV=development node ./dist/src/db/seed-dev.js"
 	},
 	"keywords": [],

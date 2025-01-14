@@ -1,5 +1,4 @@
 import axios from "axios";
-import dotenv from "dotenv";
 import standardisedInteractions from "../apis-standardised.json";
 import {
 	InteractionKey,
@@ -13,19 +12,21 @@ export const fetchPieces = async (
 	institutionId: InteractionKey,
 	page: number
 ) => {
-	const queries: StandardInteractions = standardisedInteractions;
-	const { base_url, query } = queries[institutionId];
+	try {
+		const queries: StandardInteractions = standardisedInteractions;
+		const { base_url, query } = queries[institutionId];
 
-	const apiKey: string = queries[institutionId].needs_key
-		? "&" + query.key + process.env.RIJKSAPIKEY
-		: "";
+		const apiKey: string = queries[institutionId].needs_key
+			? "&" + query.key + process.env.RIJKSAPIKEY
+			: "";
 
-	const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}&${query.page}${page}${apiKey}`;
-	const response = await axios.get(apiQuery);
-	const piecesData = response.data;
-	const pieces = mapApiPiecesData(institutionId, piecesData);
-
-	return pieces;
+		const apiQuery = `${base_url}${query.pieces}${query.search}${search}&${query.limit}10&${query.img}&${query.page}${page}${apiKey}`;
+		const response = await axios.get(apiQuery);
+		const pieces = mapApiPiecesData(institutionId, response.data);
+		return pieces;
+	} catch (err: any) {
+		return []
+	}
 };
 
 export const fetchPiece = async (
@@ -43,7 +44,8 @@ export const fetchPiece = async (
 	const response = await axios.get(apiQuery);
 	const pieceData = response.data;
 
-	if (pieceData.artObjectPage === null) await Promise.reject({ status: 404, msg: "Not Found" });
+	if (pieceData.artObjectPage === null)
+		await Promise.reject({ status: 404, msg: "Not Found" });
 	const piece: Piece = mapApiPieceData(institutionId, pieceData)!;
 	return piece;
 };
