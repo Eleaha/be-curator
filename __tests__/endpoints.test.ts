@@ -126,11 +126,8 @@ describe("/api/pieces", () => {
 	});
 	describe("GET /api/pieces/:institution_id/:piece_id", () => {
 		test("GET 200 /api/pieces/:institution_id/:piece_id - responds with a piece object when querying institution 1", async () => {
-			const { body } = await request(app)
-				.get("/api/pieces/1/O1223170")
-				.expect(200);
+			const { body } = await request(app).get("/api/pieces/1/O36950").expect(200);
 			const { piece } = body;
-
 			const isValidData = PieceSchema.safeParse(piece);
 			expect(isValidData.success).toBe(true);
 		});

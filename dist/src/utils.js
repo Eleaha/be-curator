@@ -21,7 +21,7 @@ const mapApiPiecesData = (institutionId, data) => {
             institution_id: institutionId,
             piece_id: rawPiece[pieces_data.piece_id],
             title: rawPiece[pieces_data.title] || "Untitled",
-            maker: maker || "Unknown",
+            maker: maker || "Unknown maker",
             img_url: rawPiece[pieces_data.img_key][pieces_data.img_url] + vAndAImgApiQuery,
             date: date,
         };
@@ -39,14 +39,18 @@ const mapApiPieceData = (institutionId, rawPiece) => {
         const makers = rawMakers
             .map((rawMaker) => rawMaker.name.text)
             .toString();
+        const title = record.titles.length ? record.titles[0].title : "Untitled";
+        const date = record.productionDates.length
+            ? record.productionDates[0].date.text
+            : "Unknown date";
         const piece = {
             institution_id: institutionId,
             piece_id: record.systemNumber,
-            title: record.titles[0].title || "Unknown",
-            material: record.materialsAndTechniques || "Unknown",
-            maker: makers || "Unknown",
+            title,
+            material: record.materialsAndTechniques || "Unknown material",
+            maker: makers || "Unknown maker",
             img_url: meta.images._iiif_image + "full/800,/0/default.jpg",
-            date: record.productionDates[0].date.text || "Unknown",
+            date,
             description: record.physicalDescription,
         };
         return piece;
