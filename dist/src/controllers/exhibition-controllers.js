@@ -92,11 +92,13 @@ const postExhibition = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             "description",
             "bg_colour",
             "from_date",
-            "to_date"
-        ].join();
+            "to_date",
+        ];
         data_schemas_1.ExhibitionPayloadSchema.parse(req.body);
-        if (Object.keys(req.body).join() !== validKeys) {
-            yield Promise.reject({ status: 400, msg: "Bad Request" });
+        for (const key of Object.keys(req.body)) {
+            if (!validKeys.includes(key)) {
+                yield Promise.reject({ status: 400, msg: "Bad Request" });
+            }
         }
         const exhibition = yield (0, exhibitions_models_1.insertExhibition)(req.body);
         res.status(201).send({ exhibition });
@@ -133,7 +135,7 @@ exports.postExhibPieceByExhibId = postExhibPieceByExhibId;
 const patchExhibitionPieceById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { exhibition_piece_id } = req.params;
-        const validKeys = ["piece_index", "note"].join();
+        const validKeys = ["piece_index", "note", "from_date", "to_date"];
         for (const key of Object.keys(req.body)) {
             if (!validKeys.includes(key)) {
                 yield Promise.reject({ status: 400, msg: "Bad Request" });
