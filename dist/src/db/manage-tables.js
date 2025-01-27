@@ -40,7 +40,9 @@ const createTables = () => __awaiter(void 0, void 0, void 0, function* () {
         user_id INT NOT NULL REFERENCES users(user_id),
         title VARCHAR NOT NULL,
         description VARCHAR,
-        bg_colour VARCHAR DEFAULT '#000000'
+        bg_colour VARCHAR DEFAULT '#000000',
+        from_date DATE DEFAULT CURRENT_DATE,
+        to_date DATE DEFAULT CURRENT_DATE
         );`);
     yield db_connection_1.db.query(`CREATE TABLE exhibition_pieces (
         id SERIAL PRIMARY KEY,

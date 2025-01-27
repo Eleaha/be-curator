@@ -91,6 +91,8 @@ const postExhibition = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             "title",
             "description",
             "bg_colour",
+            "from_date",
+            "to_date"
         ].join();
         data_schemas_1.ExhibitionPayloadSchema.parse(req.body);
         if (Object.keys(req.body).join() !== validKeys) {

@@ -106,7 +106,7 @@ export const insertExhibition = async (payload: ExhibitionPayload) => {
 	const queryString = format(
 		`
 			INSERT INTO exhibitions
-			(user_id, title, description, bg_colour)
+			(user_id, title, description, bg_colour, from_date, to_date)
 			VALUES %L
 			RETURNING *;
 		`,

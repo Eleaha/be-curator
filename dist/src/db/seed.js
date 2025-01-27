@@ -26,7 +26,7 @@ const seed = (testData) => __awaiter(void 0, void 0, void 0, function* () {
     const collectionPieces = (0, pg_format_1.default)(`
         INSERT INTO collection_pieces (user_id, institution_id, piece_id) VALUES %L;`, testData.collectionPieceData.map(Object.values));
     const exhibitions = (0, pg_format_1.default)(`
-        INSERT INTO exhibitions (user_id, title, description, bg_colour) VALUES %L;`, testData.exhibitionData.map(Object.values));
+        INSERT INTO exhibitions (user_id, title, description, bg_colour, from_date, to_date) VALUES %L;`, testData.exhibitionData.map(Object.values));
     const exhibitionPieces = (0, pg_format_1.default)(`
         INSERT INTO exhibition_pieces (exhibition_id, institution_id, piece_id, piece_index, img_url, note) VALUES %L;`, testData.exhibitionPieceData.map(Object.values));
     const queries = [

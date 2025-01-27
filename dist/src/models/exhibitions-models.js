@@ -79,7 +79,7 @@ const insertExhibition = (payload) => __awaiter(void 0, void 0, void 0, function
     const values = Object.values(payload);
     const queryString = (0, pg_format_1.default)(`
 			INSERT INTO exhibitions
-			(user_id, title, description, bg_colour)
+			(user_id, title, description, bg_colour, from_date, to_date)
 			VALUES %L
 			RETURNING *;
 		`, [values]);

@@ -29,7 +29,7 @@ export const seed = async (testData: TestData) => {
 
 	const exhibitions = format(
 		`
-        INSERT INTO exhibitions (user_id, title, description, bg_colour) VALUES %L;`,
+        INSERT INTO exhibitions (user_id, title, description, bg_colour, from_date, to_date) VALUES %L;`,
 		testData.exhibitionData.map(Object.values)
 	);
 

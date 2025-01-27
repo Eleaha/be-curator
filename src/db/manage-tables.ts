@@ -32,7 +32,9 @@ export const createTables = async () => {
         user_id INT NOT NULL REFERENCES users(user_id),
         title VARCHAR NOT NULL,
         description VARCHAR,
-        bg_colour VARCHAR DEFAULT '#000000'
+        bg_colour VARCHAR DEFAULT '#000000',
+        from_date DATE DEFAULT CURRENT_DATE,
+        to_date DATE DEFAULT CURRENT_DATE
         );`);
 
 	await db.query(`CREATE TABLE exhibition_pieces (

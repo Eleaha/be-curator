@@ -23,7 +23,9 @@ const ExhibitionSchema = z.object({
 	title: z.string().min(1),
 	description: z.string().max(1000).optional(),
 	bg_colour: z.string().regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/),
-	pieces: z.array(ExhibitionPieceSchema).optional()
+	pieces: z.array(ExhibitionPieceSchema).optional(),
+	to_date: z.string(),
+	from_date: z.string()
 });
 
 const InstituteSchema = z.object({

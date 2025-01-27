@@ -134,6 +134,8 @@ export const postExhibition = async (
 			"title",
 			"description",
 			"bg_colour",
+			"from_date",
+			"to_date"
 		].join();
 
 		ExhibitionPayloadSchema.parse(req.body);

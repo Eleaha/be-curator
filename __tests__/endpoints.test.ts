@@ -17,6 +17,7 @@ import {
 	Piece,
 	ExhibitionPiecePayload,
 } from "../src/schemas-interfaces/data-schemas";
+import { any } from "zod";
 
 afterAll(() => db.end());
 
@@ -178,6 +179,8 @@ describe("/api/exhibitions", () => {
 				title: "Test Exhibition",
 				description: "a test exhibition",
 				bg_colour: "#000000",
+				from_date: "2025-01-27",
+				to_date: "2035-01-27"
 			};
 			const { body } = await request(app)
 				.post("/api/exhibitions")
@@ -190,6 +193,8 @@ describe("/api/exhibitions", () => {
 				title: "Test Exhibition",
 				description: "a test exhibition",
 				bg_colour: "#000000",
+				from_date: expect.any(String),
+				to_date: expect.any(String),
 			});
 		});
 		test("POST 404 /api/exhibitions - id not found", async () => {
@@ -198,6 +203,8 @@ describe("/api/exhibitions", () => {
 				title: "Test Exhibition",
 				description: "a test exhibition",
 				bg_colour: "#000000",
+				from_date: "2025-01-27",
+				to_date: "2035-01-27",
 			};
 			const { body } = await request(app)
 				.post("/api/exhibitions")
@@ -211,6 +218,8 @@ describe("/api/exhibitions", () => {
 				title: "Test Exhibition",
 				description: "a test exhibition",
 				bg_colour: "#000000",
+				from_date: "2025-01-27",
+				to_date: "2035-01-27",
 			};
 			const { body } = await request(app)
 				.post("/api/exhibitions")
@@ -224,6 +233,8 @@ describe("/api/exhibitions", () => {
 				title: "Test Exhibition",
 				description: "a test exhibition",
 				bg_colour: "#000000000",
+				from_date: "2025-01-27",
+				to_date: "2035-01-27",
 			};
 			const { body } = await request(app)
 				.post("/api/exhibitions")
@@ -237,6 +248,8 @@ describe("/api/exhibitions", () => {
 				title: "Test Exhibition",
 				garbage: "a test exhibition",
 				bg_colour: "#000000",
+				from_date: "2025-01-27",
+				to_date: "2035-01-27",
 			};
 			const { body } = await request(app)
 				.post("/api/exhibitions")
@@ -443,6 +456,8 @@ describe("/api/exhibitions", () => {
 				title: "Exhibition one",
 				description: "new test exhibition",
 				bg_colour: "#c8b0db",
+				from_date: expect.any(String),
+				to_date: expect.any(String)
 			});
 		});
 		test("PATCH 200 /api/exhibitions/:exhibition_id - can handle multiple field updates, responds with the newly updated exhibition", async () => {
@@ -461,6 +476,8 @@ describe("/api/exhibitions", () => {
 				title: "new title",
 				description: "new test exhibition",
 				bg_colour: "#c8b0db",
+				from_date: expect.any(String),
+				to_date: expect.any(String),
 			});
 		});
 		test("PATCH 404 /api/exhibitions/:exhibition_id - id not found", async () => {

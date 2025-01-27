@@ -28,7 +28,9 @@ const ExhibitionSchema = zod_1.default.object({
     title: zod_1.default.string().min(1),
     description: zod_1.default.string().max(1000).optional(),
     bg_colour: zod_1.default.string().regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/),
-    pieces: zod_1.default.array(ExhibitionPieceSchema).optional()
+    pieces: zod_1.default.array(ExhibitionPieceSchema).optional(),
+    to_date: zod_1.default.string(),
+    from_date: zod_1.default.string()
 });
 exports.ExhibitionSchema = ExhibitionSchema;
 const InstituteSchema = zod_1.default.object({

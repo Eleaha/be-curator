@@ -3,18 +3,24 @@
         "user_id": 1,
         "title": "Exhibition one",
         "description": "my first exhibition",
-        "bg_colour": "#c8b0db"
+        "bg_colour": "#c8b0db",
+        "from_date": "2025-01-01",
+        "to_date": "2035-01-01"
     },
     {
         "user_id": 1,
         "title": "Exhibition two",
         "description": "my second exhibition",
-        "bg_colour": "#000000"
+        "bg_colour": "#000000",
+        "from_date": "2025-01-01",
+        "to_date": "2035-01-01"
     },
     {
         "user_id": 2,
         "title": "My Exhibition",
         "description": "exhibition",
-        "bg_colour": "#ffffff"
+        "bg_colour": "#ffffff",
+        "from_date": "2025-01-01",
+        "to_date": "2025-01-05"
     }
 ]
