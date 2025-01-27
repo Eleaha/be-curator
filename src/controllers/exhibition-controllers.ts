@@ -85,7 +85,7 @@ export const patchExhibitionById = async (
 	try {
 		const { exhibition_id } = req.params;
 
-		const validKeys: string = ["title", "description", "bg_colour"].join();
+		const validKeys: string[] = ["title", "description", "bg_colour", "from_date", "to_date"];
 
 		for (const key of Object.keys(req.body)) {
 			if (!validKeys.includes(key)) {
@@ -200,7 +200,7 @@ export const patchExhibitionPieceById = async (
 	try {
 		const { exhibition_piece_id } = req.params;
 
-		const validKeys: string[] = ["piece_index", "note", "from_date", "to_date"];
+		const validKeys: string[] = ["piece_index", "note"];
 
 		for (const key of Object.keys(req.body)) {
 			if (!validKeys.includes(key)) {
