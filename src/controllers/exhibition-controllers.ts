@@ -129,19 +129,21 @@ export const postExhibition = async (
 	next: NextFunction
 ) => {
 	try {
-		const validKeys: string = [
+		const validKeys: string[] = [
 			"user_id",
 			"title",
 			"description",
 			"bg_colour",
 			"from_date",
-			"to_date"
-		].join();
+			"to_date",
+		];
 
 		ExhibitionPayloadSchema.parse(req.body);
 
-		if (Object.keys(req.body).join() !== validKeys) {
-			await Promise.reject({ status: 400, msg: "Bad Request" });
+		for (const key of Object.keys(req.body)) {
+			if (!validKeys.includes(key)) {
+				await Promise.reject({ status: 400, msg: "Bad Request" });
+			}
 		}
 
 		const exhibition: Exhibition = await insertExhibition(req.body);
@@ -198,7 +200,7 @@ export const patchExhibitionPieceById = async (
 	try {
 		const { exhibition_piece_id } = req.params;
 
-		const validKeys: string = ["piece_index", "note"].join();
+		const validKeys: string[] = ["piece_index", "note", "from_date", "to_date"];
 
 		for (const key of Object.keys(req.body)) {
 			if (!validKeys.includes(key)) {
